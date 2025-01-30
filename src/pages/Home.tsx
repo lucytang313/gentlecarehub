@@ -13,7 +13,7 @@ import {
   Brain,
   Moon,
   Scale,
-  Lungs,
+  Wind,
   Gauge
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -128,7 +128,7 @@ const Home = () => {
             <HealthMetricCard
               title="Respiratory Rate"
               value="16 BPM"
-              icon={<Lungs className="h-4 w-4" />}
+              icon={<Wind className="h-4 w-4" />}
               lastChecked="Today, 2:30 PM"
               trendData={generateTrendData(16, 2)}
             />
