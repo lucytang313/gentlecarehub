@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,10 +26,15 @@ const Profile = () => {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Card>
           <CardHeader className="text-center">
-            <div className="mx-auto bg-gray-100 rounded-full p-6 w-32 h-32 flex items-center justify-center mb-4">
-              <User className="h-16 w-16 text-gray-500" />
+            <div className="mx-auto mb-4">
+              <Avatar className="h-32 w-32">
+                <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt="Amit Bachhan" />
+                <AvatarFallback>
+                  <User className="h-16 w-16" />
+                </AvatarFallback>
+              </Avatar>
             </div>
-            <CardTitle className="text-2xl">John Doe</CardTitle>
+            <CardTitle className="text-2xl">Amit Bachhan</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
@@ -52,12 +58,12 @@ const Profile = () => {
 
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <p className="font-medium">john.doe@example.com</p>
+              <p className="font-medium">amit.bachhan@example.com</p>
             </div>
 
             <div>
               <p className="text-sm text-gray-500">Emergency Contact</p>
-              <p className="font-medium">Jane Doe (Daughter)</p>
+              <p className="font-medium">Abhishek Bachhan (Son)</p>
               <p className="text-sm">+1 234 567 8900</p>
             </div>
 
