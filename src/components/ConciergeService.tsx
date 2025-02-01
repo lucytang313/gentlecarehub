@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, ShoppingBag, Pills, Car } from 'lucide-react';
+import { Phone, ShoppingBag, Pill, Car } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 
 export const ConciergeService = () => {
@@ -25,7 +25,7 @@ export const ConciergeService = () => {
           className="flex flex-col items-center gap-2 h-auto py-4"
           onClick={() => handleServiceRequest("Medicine Delivery")}
         >
-          <Pills className="h-6 w-6" />
+          <Pill className="h-6 w-6" />
           <span>Medicine Delivery</span>
         </Button>
         <Button 
