@@ -31,7 +31,7 @@ const Payments = () => {
             <div className="space-y-4">
               <div className="bg-primary/5 p-4 rounded-lg">
                 <h3 className="font-bold text-lg">Premium Care Plan</h3>
-                <p className="text-gray-600">$199/month</p>
+                <p className="text-gray-600">₹14,999/month</p>
                 <ul className="mt-4 space-y-2">
                   <li className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
@@ -81,9 +81,9 @@ const Payments = () => {
           <CardContent>
             <div className="space-y-4">
               {[
-                { date: "May 1, 2024", amount: "$199.00", status: "Paid" },
-                { date: "Apr 1, 2024", amount: "$199.00", status: "Paid" },
-                { date: "Mar 1, 2024", amount: "$199.00", status: "Paid" },
+                { date: "May 1, 2024", amount: "₹14,999", status: "Paid" },
+                { date: "Apr 1, 2024", amount: "₹14,999", status: "Paid" },
+                { date: "Mar 1, 2024", amount: "₹14,999", status: "Paid" },
               ].map((payment, index) => (
                 <div key={index} className="flex justify-between items-center p-4 border-b last:border-0">
                   <div>
