@@ -22,6 +22,10 @@ import { HealthMetricCard } from '@/components/HealthMetricCard';
 import { PrescriptionCard } from '@/components/PrescriptionCard';
 import { Logo } from '@/components/Logo';
 import { useToast } from "@/components/ui/use-toast";
+import { TicketHistory } from "@/components/TicketHistory";
+import { ConciergeService } from "@/components/ConciergeService";
+import { BuddyScheduler } from "@/components/BuddyScheduler";
+import { CommunityEvents } from "@/components/CommunityEvents";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -188,6 +192,16 @@ const Home = () => {
               trendData={generateTrendData(98, 1)}
             />
           </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <TicketHistory />
+          <ConciergeService />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <BuddyScheduler />
+          <CommunityEvents />
         </div>
 
         <div>
