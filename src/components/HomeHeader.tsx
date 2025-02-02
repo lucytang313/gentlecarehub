@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Bell } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
@@ -21,17 +21,7 @@ export const HomeHeader = () => {
   return (
     <header className="bg-white shadow-lg border-b border-primary/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => navigate(-1)}
-            className="hover:bg-primary/10"
-          >
-            <ArrowLeft className="h-5 w-5 text-primary" />
-          </Button>
-          <Logo />
-        </div>
+        <Logo />
         <div className="flex items-center gap-4">
           <Button 
             variant="destructive"
@@ -47,11 +37,11 @@ export const HomeHeader = () => {
           >
             <Avatar className="h-10 w-10 border-2 border-primary">
               <AvatarImage 
-                src="/lovable-uploads/6f8636d0-de39-49e5-a707-a7cc04c4fb22.png" 
+                src="/lovable-uploads/06ca9dad-031b-4abb-89e3-b5790fbd261b.png" 
                 alt="Profile Picture"
                 className="object-cover"
               />
-              <AvatarFallback>AB</AvatarFallback>
+              <AvatarFallback>PA</AvatarFallback>
             </Avatar>
           </div>
         </div>

@@ -22,7 +22,7 @@ const Profile = () => {
   // This would typically come from your app's state management
   const profileData = {
     personalInfo: {
-      fullName: "Amit Bachhan",
+      fullName: "Pawan Agarwal",
       dob: "1958-05-15",
       gender: "Male",
       bloodGroup: "O+",
@@ -32,14 +32,14 @@ const Profile = () => {
     contact: {
       phone: "+91 98765 43210",
       altPhone: "+91 98765 43211",
-      email: "amit.bachhan@example.com",
+      email: "pawan.agarwal@example.com",
       address: "42/B, Pali Hill Road, Bandra West",
       city: "Mumbai",
       state: "Maharashtra",
       pincode: "400050"
     },
     emergency: {
-      kinName: "Abhishek Bachhan",
+      kinName: "Roshan Agarwal",
       kinPhone: "+91 98765 43212",
       relationship: "Son",
       neighborName: "Rajesh Kumar",
@@ -83,14 +83,12 @@ const Profile = () => {
           </Button>
         </div>
       </header>
-
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        {/* Personal Information Card */}
         <Card>
           <CardHeader className="text-center">
             <div className="mx-auto mb-4">
               <Avatar className="h-32 w-32">
-                <AvatarImage src="/lovable-uploads/6f8636d0-de39-49e5-a707-a7cc04c4fb22.png" alt={profileData.personalInfo.fullName} />
+                <AvatarImage src="/lovable-uploads/06ca9dad-031b-4abb-89e3-b5790fbd261b.png" alt={profileData.personalInfo.fullName} />
                 <AvatarFallback>
                   <User className="h-16 w-16" />
                 </AvatarFallback>
@@ -123,7 +121,6 @@ const Profile = () => {
             </div>
           </CardContent>
         </Card>
-
         {/* Contact Information */}
         <Card>
           <CardHeader>
