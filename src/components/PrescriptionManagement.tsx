@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Pill, Upload, FileText, Flask } from 'lucide-react';
+import { Pill, Upload, FileText, FlaskConical } from 'lucide-react';
 
 export const PrescriptionManagement = () => {
   const { toast } = useToast();
