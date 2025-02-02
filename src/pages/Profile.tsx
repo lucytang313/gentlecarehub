@@ -1,13 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, User, Edit, Phone, Mail, MapPin, Heart, Activity, AlertCircle } from 'lucide-react';
+import { ArrowLeft, User, Edit, Phone, Mail, MapPin, Heart, Activity, AlertCircle, LogOut } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSignOut = () => {
+    toast({
+      title: "Signed out successfully",
+      duration: 2000,
+    });
+    navigate('/signin');
+  };
 
   // This would typically come from your app's state management
   const profileData = {
@@ -23,8 +33,10 @@ const Profile = () => {
       phone: "+91 98765 43210",
       altPhone: "+91 98765 43211",
       email: "amit.bachhan@example.com",
-      address: "123 Care Street, Health City",
-      pincode: "400001"
+      address: "42/B, Pali Hill Road, Bandra West",
+      city: "Mumbai",
+      state: "Maharashtra",
+      pincode: "400050"
     },
     emergency: {
       kinName: "Abhishek Bachhan",
@@ -39,9 +51,9 @@ const Profile = () => {
       surgeries: "Knee replacement (2019)"
     },
     preferences: {
-      doctorName: "Dr. Mehta",
+      doctorName: "Dr. Priya Patel",
       doctorContact: "+91 98765 43214",
-      hospital: "City Care Hospital",
+      hospital: "Lilavati Hospital",
       activityLevel: "Moderately Active",
       diet: "Diabetic Diet"
     }
@@ -78,7 +90,7 @@ const Profile = () => {
           <CardHeader className="text-center">
             <div className="mx-auto mb-4">
               <Avatar className="h-32 w-32">
-                <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt={profileData.personalInfo.fullName} />
+                <AvatarImage src="/lovable-uploads/6f8636d0-de39-49e5-a707-a7cc04c4fb22.png" alt={profileData.personalInfo.fullName} />
                 <AvatarFallback>
                   <User className="h-16 w-16" />
                 </AvatarFallback>
@@ -220,6 +232,16 @@ const Profile = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Sign Out Button */}
+        <Button 
+          variant="destructive" 
+          className="w-full flex items-center justify-center gap-2"
+          onClick={handleSignOut}
+        >
+          <LogOut className="h-5 w-5" />
+          Sign Out
+        </Button>
       </main>
     </div>
   );

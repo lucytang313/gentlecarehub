@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Bell } from 'lucide-react';
+import { ArrowLeft, Bell } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
@@ -15,14 +15,6 @@ export const HomeHeader = () => {
       description: "Our team has been notified and will contact you immediately.",
       duration: 5000,
     });
-  };
-
-  const handleSignOut = () => {
-    toast({
-      title: "Signed out successfully",
-      duration: 2000,
-    });
-    navigate('/signin');
   };
 
   return (
@@ -56,14 +48,6 @@ export const HomeHeader = () => {
             />
             <span className="font-medium text-primary">Amit Bachhan</span>
           </div>
-          <Button 
-            variant="ghost" 
-            className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-            onClick={handleSignOut}
-          >
-            <LogOut className="h-5 w-5" />
-            Sign Out
-          </Button>
         </div>
       </div>
     </header>

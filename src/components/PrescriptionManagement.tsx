@@ -28,7 +28,7 @@ export const PrescriptionManagement = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="prescriptions" className="space-y-4">
-          <TabsList className="grid grid-cols-3 gap-4">
+          <TabsList className="grid w-full grid-cols-3 gap-4">
             <TabsTrigger value="prescriptions">Prescriptions</TabsTrigger>
             <TabsTrigger value="lab-reports">Lab Reports</TabsTrigger>
             <TabsTrigger value="medicines">Medicine Management</TabsTrigger>
@@ -36,13 +36,12 @@ export const PrescriptionManagement = () => {
 
           <TabsContent value="prescriptions" className="space-y-4">
             <div className="grid gap-4">
-              {/* Existing Prescriptions */}
               <div className="space-y-2">
                 <h3 className="font-medium">Recent Prescriptions</h3>
                 <div className="grid gap-2">
                   <div className="p-3 bg-gray-50 rounded-lg flex justify-between items-center">
                     <div>
-                      <p className="font-medium">Dr. Smith - Cardiology</p>
+                      <p className="font-medium">Dr. Rajesh Sharma - Cardiology</p>
                       <p className="text-sm text-gray-600">Visit Date: 15th March 2024</p>
                     </div>
                     <Button variant="outline" size="sm">
@@ -53,7 +52,6 @@ export const PrescriptionManagement = () => {
                 </div>
               </div>
 
-              {/* Upload New Prescription */}
               <div className="space-y-4 border-t pt-4">
                 <h3 className="font-medium">Upload New Prescription</h3>
                 <div className="space-y-2">
@@ -82,7 +80,6 @@ export const PrescriptionManagement = () => {
 
           <TabsContent value="lab-reports" className="space-y-4">
             <div className="grid gap-4">
-              {/* Existing Lab Reports */}
               <div className="space-y-2">
                 <h3 className="font-medium">Recent Lab Reports</h3>
                 <div className="grid gap-2">
@@ -99,7 +96,6 @@ export const PrescriptionManagement = () => {
                 </div>
               </div>
 
-              {/* Upload New Lab Report */}
               <div className="space-y-4 border-t pt-4">
                 <h3 className="font-medium">Upload New Lab Report</h3>
                 <div className="space-y-2">
@@ -128,7 +124,6 @@ export const PrescriptionManagement = () => {
 
           <TabsContent value="medicines" className="space-y-4">
             <div className="grid gap-4">
-              {/* Current Medicines */}
               <div className="space-y-2">
                 <h3 className="font-medium">Current Medicines</h3>
                 <div className="grid gap-2">
@@ -140,7 +135,8 @@ export const PrescriptionManagement = () => {
                     <div className="mt-2 text-sm text-gray-600">
                       <p>Dosage: 1 tablet</p>
                       <p>Timing: Twice daily after meals</p>
-                      <p>Prescribed by: Dr. Johnson</p>
+                      <p>Prescribed by: Dr. Priya Patel</p>
+                      <p>Expiry Date: December 2024</p>
                       <p className="mt-1 text-amber-600">Stock remaining: 15 tablets</p>
                     </div>
                   </div>
@@ -152,7 +148,8 @@ export const PrescriptionManagement = () => {
                     <div className="mt-2 text-sm text-gray-600">
                       <p>Dosage: 1 tablet</p>
                       <p>Timing: Once daily in the morning</p>
-                      <p>Prescribed by: Dr. Smith</p>
+                      <p>Prescribed by: Dr. Suresh Kumar</p>
+                      <p>Expiry Date: November 2024</p>
                       <p className="mt-1 text-red-600">Stock remaining: 5 tablets (Low)</p>
                     </div>
                   </div>

@@ -53,11 +53,8 @@ const Home = () => {
             <CardHeader>
               <CardTitle className="text-primary">Support</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent>
               <Button className="w-full bg-primary hover:bg-primary/90">Contact Care Manager</Button>
-              <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
-                Request Emergency Assistance
-              </Button>
             </CardContent>
           </Card>
         </div>
