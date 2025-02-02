@@ -4,6 +4,7 @@ import { ArrowLeft, Bell } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
@@ -40,13 +41,18 @@ export const HomeHeader = () => {
             <Bell className="h-5 w-5 animate-pulse" />
             SOS
           </Button>
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/profile')}>
-            <img 
-              src="/lovable-uploads/6f8636d0-de39-49e5-a707-a7cc04c4fb22.png" 
-              alt="Amit Bachhan" 
-              className="h-10 w-10 rounded-full object-cover border-2 border-primary"
-            />
-            <span className="font-medium text-primary">Amit Bachhan</span>
+          <div 
+            className="cursor-pointer" 
+            onClick={() => navigate('/profile')}
+          >
+            <Avatar className="h-10 w-10 border-2 border-primary">
+              <AvatarImage 
+                src="/lovable-uploads/6f8636d0-de39-49e5-a707-a7cc04c4fb22.png" 
+                alt="Profile Picture"
+                className="object-cover"
+              />
+              <AvatarFallback>AB</AvatarFallback>
+            </Avatar>
           </div>
         </div>
       </div>
