@@ -5,7 +5,7 @@ import { HomeHeader } from '@/components/HomeHeader';
 import { HealthStatusCard } from '@/components/HealthStatusCard';
 import { PrimaryVitals } from '@/components/PrimaryVitals';
 import { AdditionalHealthMetrics } from '@/components/AdditionalHealthMetrics';
-import { PrescriptionCard } from '@/components/PrescriptionCard';
+import { PrescriptionManagement } from '@/components/PrescriptionManagement';
 import { TicketHistory } from "@/components/TicketHistory";
 import { ConciergeService } from "@/components/ConciergeService";
 import { BuddyScheduler } from "@/components/BuddyScheduler";
@@ -34,29 +34,7 @@ const Home = () => {
           <CommunityEvents />
         </div>
 
-        <div>
-          <h2 className="text-2xl font-bold mb-4 text-primary">Current Prescriptions</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <PrescriptionCard
-              medicine="Metformin"
-              dosage="500mg"
-              timing="Twice daily"
-              doctor="Dr. Smith"
-            />
-            <PrescriptionCard
-              medicine="Lisinopril"
-              dosage="10mg"
-              timing="Once daily"
-              doctor="Dr. Johnson"
-            />
-            <PrescriptionCard
-              medicine="Simvastatin"
-              dosage="20mg"
-              timing="Evening"
-              doctor="Dr. Williams"
-            />
-          </div>
-        </div>
+        <PrescriptionManagement />
 
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="bg-gradient-to-br from-white to-gray-50 border-primary/10 shadow-lg">

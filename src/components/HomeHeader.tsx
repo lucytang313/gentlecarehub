@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, AlertCircle, LogOut } from 'lucide-react';
+import { ArrowLeft, LogOut, Bell } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
@@ -45,8 +45,8 @@ export const HomeHeader = () => {
             className="flex items-center gap-2 bg-red-600 hover:bg-red-700"
             onClick={handleEmergency}
           >
-            <AlertCircle className="h-5 w-5" />
-            Emergency Assistance
+            <Bell className="h-5 w-5 animate-pulse" />
+            SOS
           </Button>
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/profile')}>
             <img 
