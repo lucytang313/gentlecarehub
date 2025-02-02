@@ -1,12 +1,51 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, User, Edit } from 'lucide-react';
+import { ArrowLeft, User, Edit, Phone, Mail, MapPin, Heart, Activity, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  // This would typically come from your app's state management
+  const profileData = {
+    personalInfo: {
+      fullName: "Amit Bachhan",
+      dob: "1958-05-15",
+      gender: "Male",
+      bloodGroup: "O+",
+      height: "175",
+      weight: "68",
+    },
+    contact: {
+      phone: "+91 98765 43210",
+      altPhone: "+91 98765 43211",
+      email: "amit.bachhan@example.com",
+      address: "123 Care Street, Health City",
+      pincode: "400001"
+    },
+    emergency: {
+      kinName: "Abhishek Bachhan",
+      kinPhone: "+91 98765 43212",
+      relationship: "Son",
+      neighborName: "Rajesh Kumar",
+      neighborPhone: "+91 98765 43213"
+    },
+    medical: {
+      conditions: "Hypertension, Diabetes Type 2",
+      allergies: "Penicillin",
+      surgeries: "Knee replacement (2019)"
+    },
+    preferences: {
+      doctorName: "Dr. Mehta",
+      doctorContact: "+91 98765 43214",
+      hospital: "City Care Hospital",
+      activityLevel: "Moderately Active",
+      diet: "Diabetic Diet"
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -33,53 +72,151 @@ const Profile = () => {
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Personal Information Card */}
         <Card>
           <CardHeader className="text-center">
             <div className="mx-auto mb-4">
               <Avatar className="h-32 w-32">
-                <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt="Amit Bachhan" />
+                <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt={profileData.personalInfo.fullName} />
                 <AvatarFallback>
                   <User className="h-16 w-16" />
                 </AvatarFallback>
               </Avatar>
             </div>
-            <CardTitle className="text-2xl">Amit Bachhan</CardTitle>
+            <CardTitle className="text-2xl">{profileData.personalInfo.fullName}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-sm text-gray-500">Age</p>
-                <p className="font-medium">65 years</p>
+                <p className="text-sm text-gray-500">Date of Birth</p>
+                <p className="font-medium">{new Date(profileData.personalInfo.dob).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Gender</p>
+                <p className="font-medium">{profileData.personalInfo.gender}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Blood Group</p>
+                <p className="font-medium">{profileData.personalInfo.bloodGroup}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Height</p>
-                <p className="font-medium">175 cm</p>
+                <p className="font-medium">{profileData.personalInfo.height} cm</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Weight</p>
-                <p className="font-medium">68 kg</p>
+                <p className="font-medium">{profileData.personalInfo.weight} kg</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Contact Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Phone className="h-5 w-5" />
+              Contact Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-500">Phone</p>
+                <p className="font-medium">{profileData.contact.phone}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Blood Type</p>
-                <p className="font-medium">O+</p>
+                <p className="text-sm text-gray-500">Alternative Phone</p>
+                <p className="font-medium">{profileData.contact.altPhone}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-sm text-gray-500">Email</p>
+                <p className="font-medium">{profileData.contact.email}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-sm text-gray-500">Address</p>
+                <p className="font-medium">{profileData.contact.address}</p>
+                <p className="text-sm">PIN: {profileData.contact.pincode}</p>
               </div>
             </div>
+          </CardContent>
+        </Card>
 
+        {/* Emergency Contacts */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <AlertCircle className="h-5 w-5" />
+              Emergency Contacts
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-gray-500">Email</p>
-              <p className="font-medium">amit.bachhan@example.com</p>
+              <p className="text-sm text-gray-500">Next of Kin</p>
+              <p className="font-medium">{profileData.emergency.kinName} ({profileData.emergency.relationship})</p>
+              <p className="text-sm">{profileData.emergency.kinPhone}</p>
             </div>
-
+            <Separator />
             <div>
-              <p className="text-sm text-gray-500">Emergency Contact</p>
-              <p className="font-medium">Abhishek Bachhan (Son)</p>
-              <p className="text-sm">+1 234 567 8900</p>
+              <p className="text-sm text-gray-500">Neighbor Contact</p>
+              <p className="font-medium">{profileData.emergency.neighborName}</p>
+              <p className="text-sm">{profileData.emergency.neighborPhone}</p>
             </div>
+          </CardContent>
+        </Card>
 
+        {/* Medical Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Heart className="h-5 w-5" />
+              Medical Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-gray-500">Address</p>
-              <p className="font-medium">123 Care Street, Health City, HC 12345</p>
+              <p className="text-sm text-gray-500">Health Conditions</p>
+              <p className="font-medium">{profileData.medical.conditions}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Allergies</p>
+              <p className="font-medium">{profileData.medical.allergies}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Past Surgeries</p>
+              <p className="font-medium">{profileData.medical.surgeries}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Preferences */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Activity className="h-5 w-5" />
+              Preferences & Lifestyle
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-500">Preferred Doctor</p>
+                <p className="font-medium">{profileData.preferences.doctorName}</p>
+                <p className="text-sm">{profileData.preferences.doctorContact}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Preferred Hospital</p>
+                <p className="font-medium">{profileData.preferences.hospital}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Activity Level</p>
+                <p className="font-medium">{profileData.preferences.activityLevel}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Diet Preference</p>
+                <p className="font-medium">{profileData.preferences.diet}</p>
+              </div>
             </div>
           </CardContent>
         </Card>
