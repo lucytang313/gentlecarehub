@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { PersonalInfoCard } from '@/components/profile/PersonalInfoCard';
 import { ContactCard } from '@/components/profile/ContactCard';
+import { EmergencyContactCard } from '@/components/profile/EmergencyContactCard';
+import { MedicalInfoCard } from '@/components/profile/MedicalInfoCard';
+import { LifestyleCard } from '@/components/profile/LifestyleCard';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -40,6 +43,30 @@ const Profile = () => {
       city: "Mumbai",
       state: "Maharashtra",
       pincode: "400050"
+    },
+    emergencyContact: {
+      name: "Roshan Agarwal",
+      phone: "+91 98765 43212",
+      relationship: "Son",
+      neighborName: "Rajesh Kumar",
+      neighborPhone: "+91 98765 43213"
+    },
+    medicalInfo: {
+      healthConditions: "Hypertension, Diabetes Type 2",
+      allergies: "Peanuts, Penicillin",
+      surgeries: "Knee replacement (2019)",
+      doctorName: "Dr. Mehta",
+      doctorContact: "+91 98765 43214",
+      preferredHospital: "Lilavati Hospital"
+    },
+    lifestyle: {
+      activityLevel: "Moderately Active",
+      dietPreference: "Vegetarian",
+      specialNeeds: {
+        mobilityAssistance: true,
+        visionImpairment: false,
+        hearingImpairment: false
+      }
     }
   };
 
@@ -47,16 +74,7 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/home')}
-              className="mr-4"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-xl font-bold">Profile</h1>
-          </div>
+          <h1 className="text-xl font-bold">Profile</h1>
           <Button 
             onClick={() => navigate('/onboarding')} 
             variant="outline"
@@ -70,6 +88,9 @@ const Profile = () => {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <PersonalInfoCard personalInfo={profileData.personalInfo} />
         <ContactCard contact={profileData.contact} />
+        <EmergencyContactCard emergencyContact={profileData.emergencyContact} />
+        <MedicalInfoCard medicalInfo={profileData.medicalInfo} />
+        <LifestyleCard lifestyle={profileData.lifestyle} />
         
         <Button 
           variant="destructive" 
