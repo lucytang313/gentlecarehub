@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import { LogOut, ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { PersonalInfoCard } from '@/components/profile/PersonalInfoCard';
@@ -38,7 +38,7 @@ const Profile = () => {
     contact: {
       phone: "+91 98765 43210",
       altPhone: "+91 98765 43211",
-      email: "pawan.agarwal@example.com",
+      email: "pawan.agarwal@truemail.com",
       address: "42/B, Pali Hill Road, Bandra West",
       city: "Mumbai",
       state: "Maharashtra",
@@ -74,7 +74,17 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold">Profile</h1>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Button>
+            <h1 className="text-xl font-bold">Profile</h1>
+          </div>
           <Button 
             onClick={() => navigate('/onboarding')} 
             variant="outline"
