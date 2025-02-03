@@ -87,6 +87,38 @@ export const OnboardingForm = () => {
             <Label htmlFor="idProof">ID Proof Upload</Label>
             <Input id="idProof" type="file" accept=".pdf,.jpg,.jpeg,.png" {...register("idProof")} required />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="wakeUpTime">Usual Wake Up Time</Label>
+            <Input 
+              id="wakeUpTime" 
+              type="time" 
+              {...register("wakeUpTime")} 
+              required 
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Current Location Status</Label>
+            <RadioGroup defaultValue="home">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="home" id="home" />
+                  <Label htmlFor="home">At Home</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="travelling" id="travelling" />
+                  <Label htmlFor="travelling">Travelling</Label>
+                </div>
+              </div>
+            </RadioGroup>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="expectedReturn">Expected Return Date (if travelling)</Label>
+            <Input 
+              id="expectedReturn" 
+              type="date" 
+              {...register("expectedReturn")} 
+            />
+          </div>
         </div>
       </div>
 
