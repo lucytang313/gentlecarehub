@@ -87,18 +87,19 @@ export const PersonalInfoSection = ({ register, watch }: { register: any, watch:
             </div>
           </RadioGroup>
         </div>
-        {locationStatus === 'travelling' && (
-          <div className="space-y-2">
-            <Label htmlFor="expectedReturn">Expected Return Date <span className="text-red-500">*</span></Label>
-            <Input 
-              id="expectedReturn" 
-              type="date" 
-              {...register("expectedReturn", { 
-                required: locationStatus === 'travelling' 
-              })} 
-            />
-          </div>
-        )}
+        <div className="space-y-2">
+          <Label htmlFor="expectedReturn">
+            Expected Return Date
+            {locationStatus === 'travelling' && <span className="text-red-500">*</span>}
+          </Label>
+          <Input 
+            id="expectedReturn" 
+            type="date" 
+            {...register("expectedReturn", { 
+              required: locationStatus === 'travelling' 
+            })} 
+          />
+        </div>
       </div>
     </div>
   );
