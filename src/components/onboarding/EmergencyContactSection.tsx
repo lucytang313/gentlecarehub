@@ -8,15 +8,15 @@ export const EmergencyContactSection = ({ register }: { register: any }) => {
       <h3 className="text-lg font-semibold text-primary">Emergency Contact Details</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="emergencyName">Next of Kin's Name</Label>
+          <Label htmlFor="emergencyName">Next of Kin's Name <span className="text-red-500">*</span></Label>
           <Input id="emergencyName" {...register("emergencyName")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="emergencyPhone">Next of Kin's Contact Number</Label>
+          <Label htmlFor="emergencyPhone">Next of Kin's Contact Number <span className="text-red-500">*</span></Label>
           <Input id="emergencyPhone" type="tel" {...register("emergencyPhone")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="relationship">Relationship with the Senior</Label>
+          <Label htmlFor="relationship">Relationship with the Senior <span className="text-red-500">*</span></Label>
           <Input id="relationship" {...register("relationship")} required />
         </div>
         <div className="space-y-2">

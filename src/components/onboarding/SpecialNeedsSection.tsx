@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 export const SpecialNeedsSection = ({ register }: { register: any }) => {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-primary">Special Needs</h3>
+      <h3 className="text-lg font-semibold text-primary">Special Needs (Optional)</h3>
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
           <Checkbox id="mobilityAssistance" {...register("mobilityAssistance")} />

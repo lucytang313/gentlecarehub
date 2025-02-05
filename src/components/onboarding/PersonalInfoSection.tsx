@@ -10,16 +10,16 @@ export const PersonalInfoSection = ({ register }: { register: any }) => {
       <h3 className="text-lg font-semibold text-primary">Personal Information</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="fullName">Full Name</Label>
+          <Label htmlFor="fullName">Full Name <span className="text-red-500">*</span></Label>
           <Input id="fullName" {...register("fullName")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="dob">Date of Birth</Label>
+          <Label htmlFor="dob">Date of Birth <span className="text-red-500">*</span></Label>
           <Input id="dob" type="date" {...register("dob")} required />
         </div>
         <div className="space-y-2">
-          <Label>Gender</Label>
-          <RadioGroup defaultValue="male">
+          <Label>Gender <span className="text-red-500">*</span></Label>
+          <RadioGroup defaultValue="male" required>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="male" id="male" />
@@ -37,8 +37,8 @@ export const PersonalInfoSection = ({ register }: { register: any }) => {
           </RadioGroup>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="bloodGroup">Blood Group</Label>
-          <Select>
+          <Label htmlFor="bloodGroup">Blood Group <span className="text-red-500">*</span></Label>
+          <Select required>
             <SelectTrigger>
               <SelectValue placeholder="Select blood group" />
             </SelectTrigger>
@@ -55,19 +55,19 @@ export const PersonalInfoSection = ({ register }: { register: any }) => {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="height">Height (cm)</Label>
+          <Label htmlFor="height">Height (cm) <span className="text-red-500">*</span></Label>
           <Input id="height" type="number" {...register("height")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="weight">Weight (kg)</Label>
+          <Label htmlFor="weight">Weight (kg) <span className="text-red-500">*</span></Label>
           <Input id="weight" type="number" {...register("weight")} required />
         </div>
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="idProof">ID Proof Upload</Label>
+          <Label htmlFor="idProof">ID Proof Upload <span className="text-red-500">*</span></Label>
           <Input id="idProof" type="file" accept=".pdf,.jpg,.jpeg,.png" {...register("idProof")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="wakeUpTime">Usual Wake Up Time</Label>
+          <Label htmlFor="wakeUpTime">Usual Wake Up Time <span className="text-red-500">*</span></Label>
           <Input id="wakeUpTime" type="time" {...register("wakeUpTime")} required />
         </div>
         <div className="space-y-2">

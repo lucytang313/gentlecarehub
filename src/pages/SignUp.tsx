@@ -12,14 +12,16 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [dataSharing, setDataSharing] = useState(false);
+  const [emergencyNotifications, setEmergencyNotifications] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!acceptedTerms) {
+    if (!acceptedTerms || !dataSharing || !emergencyNotifications) {
       toast({
-        title: "Terms & Conditions",
-        description: "Please accept the terms and conditions to continue",
+        title: "Consent Required",
+        description: "Please accept all the required consents to continue",
         variant: "destructive",
       });
       return;
@@ -65,28 +67,33 @@ const SignUp = () => {
                 required
               />
             </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="terms" 
-                checked={acceptedTerms}
-                onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
-              />
-              <Label htmlFor="terms" className="text-sm">
-                I accept the{" "}
-                <a 
-                  href="/terms" 
-                  className="text-primary hover:underline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toast({
-                      title: "Terms & Conditions",
-                      description: "Terms & Conditions will open in a new window",
-                    });
-                  }}
-                >
-                  terms and conditions
-                </a>
-              </Label>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="dataSharing" 
+                  checked={dataSharing}
+                  onCheckedChange={(checked) => setDataSharing(checked as boolean)}
+                />
+                <Label htmlFor="dataSharing">I consent to sharing my data with healthcare providers</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="emergencyNotifications" 
+                  checked={emergencyNotifications}
+                  onCheckedChange={(checked) => setEmergencyNotifications(checked as boolean)}
+                />
+                <Label htmlFor="emergencyNotifications">I consent to receiving emergency notifications</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="terms" 
+                  checked={acceptedTerms}
+                  onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
+                />
+                <Label htmlFor="terms">
+                  I agree to the Terms and Conditions
+                </Label>
+              </div>
             </div>
             <Button type="submit" className="w-full">
               Sign Up

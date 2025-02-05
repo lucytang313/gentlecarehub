@@ -9,7 +9,7 @@ export const ContactSection = ({ register }: { register: any }) => {
       <h3 className="text-lg font-semibold text-primary">Contact Information</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
+          <Label htmlFor="phone">Phone Number <span className="text-red-500">*</span></Label>
           <Input id="phone" type="tel" {...register("phone")} required />
         </div>
         <div className="space-y-2">
@@ -17,15 +17,15 @@ export const ContactSection = ({ register }: { register: any }) => {
           <Input id="altPhone" type="tel" {...register("altPhone")} />
         </div>
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" type="email" {...register("email")} />
+          <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
+          <Input id="email" type="email" {...register("email")} required />
         </div>
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="address">Current Address</Label>
+          <Label htmlFor="address">Current Address <span className="text-red-500">*</span></Label>
           <Textarea id="address" {...register("address")} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="pincode">PIN Code</Label>
+          <Label htmlFor="pincode">PIN Code <span className="text-red-500">*</span></Label>
           <Input id="pincode" {...register("pincode")} required />
         </div>
       </div>

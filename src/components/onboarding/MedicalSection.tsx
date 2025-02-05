@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 export const MedicalSection = ({ register }: { register: any }) => {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-primary">Medical History</h3>
+      <h3 className="text-lg font-semibold text-primary">Medical History (Optional)</h3>
       <div className="grid grid-cols-1 gap-4">
         <div className="space-y-2">
           <Label htmlFor="healthConditions">Existing Health Conditions</Label>
