@@ -74,7 +74,7 @@ export const PersonalInfoSection = ({ register, watch }: { register: any, watch:
         </div>
         <div className="space-y-2">
           <Label>Current Location Status <span className="text-red-500">*</span></Label>
-          <RadioGroup defaultValue="home" {...register('locationStatus')} required>
+          <RadioGroup defaultValue="home" {...register("locationStatus")} required>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="home" id="home" />
