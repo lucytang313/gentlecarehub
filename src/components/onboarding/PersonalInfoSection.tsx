@@ -72,7 +72,6 @@ export const PersonalInfoSection = ({ register, watch }: { register: any, watch:
           <Label htmlFor="wakeUpTime">Usual Wake Up Time <span className="text-red-500">*</span></Label>
           <Input id="wakeUpTime" type="time" {...register("wakeUpTime")} required />
         </div>
-
         <div className="space-y-2">
           <Label>Current Location Status <span className="text-red-500">*</span></Label>
           <RadioGroup defaultValue="home" {...register('locationStatus')} required>
