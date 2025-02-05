@@ -20,6 +20,9 @@ export const PrimaryVitals = () => {
           icon={<Heart className="h-4 w-4" />}
           lastChecked="Today, 2:30 PM"
           trendData={generateTrendData(72, 5)}
+          description="Heart rate is the number of times your heart beats per minute. It varies based on activity level, emotions, and overall health."
+          unit="Beats Per Minute (BPM)"
+          normalRange="60-100 BPM"
         />
         <HealthMetricCard
           title="Blood Pressure"
@@ -27,6 +30,9 @@ export const PrimaryVitals = () => {
           icon={<Activity className="h-4 w-4" />}
           lastChecked="Today, 2:30 PM"
           trendData={generateTrendData(120, 10)}
+          description="Blood pressure is the force of blood pushing against artery walls. It's shown as two numbers: systolic (top) and diastolic (bottom) pressure."
+          unit="Millimeters of Mercury (mmHg)"
+          normalRange="Systolic: 90-120 mmHg, Diastolic: 60-80 mmHg"
         />
         <HealthMetricCard
           title="Respiratory Rate"
@@ -34,6 +40,9 @@ export const PrimaryVitals = () => {
           icon={<Wind className="h-4 w-4" />}
           lastChecked="Today, 2:30 PM"
           trendData={generateTrendData(16, 2)}
+          description="Respiratory rate is the number of breaths taken per minute. It's measured by counting chest rises and falls."
+          unit="Breaths Per Minute (BPM)"
+          normalRange="12-20 BPM"
         />
         <HealthMetricCard
           title="Temperature"
@@ -41,6 +50,9 @@ export const PrimaryVitals = () => {
           icon={<Thermometer className="h-4 w-4" />}
           lastChecked="Today, 2:30 PM"
           trendData={generateTrendData(36.6, 0.3)}
+          description="Body temperature is a measure of the body's ability to generate and get rid of heat. Normal temperature varies throughout the day."
+          unit="Celsius (°C)"
+          normalRange="36.1-37.2°C"
         />
       </div>
     </div>

@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export const PersonalInfoSection = ({ register }: { register: any }) => {
+export const PersonalInfoSection = ({ register, watch }: { register: any, watch: any }) => {
+  const locationStatus = watch('locationStatus');
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-primary">Personal Information</h3>
@@ -70,9 +72,10 @@ export const PersonalInfoSection = ({ register }: { register: any }) => {
           <Label htmlFor="wakeUpTime">Usual Wake Up Time <span className="text-red-500">*</span></Label>
           <Input id="wakeUpTime" type="time" {...register("wakeUpTime")} required />
         </div>
+
         <div className="space-y-2">
-          <Label>Current Location Status</Label>
-          <RadioGroup defaultValue="home">
+          <Label>Current Location Status <span className="text-red-500">*</span></Label>
+          <RadioGroup defaultValue="home" {...register('locationStatus')} required>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="home" id="home" />
@@ -85,10 +88,18 @@ export const PersonalInfoSection = ({ register }: { register: any }) => {
             </div>
           </RadioGroup>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="expectedReturn">Expected Return Date (if travelling)</Label>
-          <Input id="expectedReturn" type="date" {...register("expectedReturn")} />
-        </div>
+        {locationStatus === 'travelling' && (
+          <div className="space-y-2">
+            <Label htmlFor="expectedReturn">Expected Return Date <span className="text-red-500">*</span></Label>
+            <Input 
+              id="expectedReturn" 
+              type="date" 
+              {...register("expectedReturn", { 
+                required: locationStatus === 'travelling' 
+              })} 
+            />
+          </div>
+        )}
       </div>
     </div>
   );
