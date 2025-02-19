@@ -23,11 +23,11 @@ export const ConciergeService = () => {
   };
 
   const handleBookNow = (service: string) => {
-    // Create a new ticket
+    // Create a new ticket with explicitly typed status
     const newTicket = {
       id: Math.random().toString(36).substr(2, 9),
       title: `${service} Request`,
-      status: 'open',
+      status: 'open' as const, // Explicitly type as literal 'open'
       date: new Date().toISOString().split('T')[0],
       category: 'Concierge'
     };
