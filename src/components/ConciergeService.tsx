@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, ShoppingBag, Pill, Car } from 'lucide-react';
+import { Phone, ShoppingBag, Pill, Car, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useTickets } from '@/hooks/useTickets';
 
@@ -10,10 +10,15 @@ type ServiceState = {
   [key: string]: boolean;
 };
 
+type LoadingState = {
+  [key: string]: boolean;
+};
+
 export const ConciergeService = () => {
   const { toast } = useToast();
   const { addTicket } = useTickets();
   const [selectedServices, setSelectedServices] = useState<ServiceState>({});
+  const [loadingServices, setLoadingServices] = useState<LoadingState>({});
 
   const handleServiceRequest = (service: string) => {
     setSelectedServices(prev => ({
@@ -22,12 +27,21 @@ export const ConciergeService = () => {
     }));
   };
 
-  const handleBookNow = (service: string) => {
+  const handleBookNow = async (service: string) => {
+    // Set loading state
+    setLoadingServices(prev => ({
+      ...prev,
+      [service]: true
+    }));
+
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
     // Create a new ticket with explicitly typed status
     const newTicket = {
       id: Math.random().toString(36).substr(2, 9),
       title: `${service} Request`,
-      status: 'open' as const, // Explicitly type as literal 'open'
+      status: 'open' as const,
       date: new Date().toISOString().split('T')[0],
       category: 'Concierge'
     };
@@ -41,7 +55,11 @@ export const ConciergeService = () => {
       description: `Your ${service} request has been created. Ticket ID: ${newTicket.id}`,
     });
 
-    // Reset the service state
+    // Reset the loading and service states
+    setLoadingServices(prev => ({
+      ...prev,
+      [service]: false
+    }));
     setSelectedServices(prev => ({
       ...prev,
       [service]: false
@@ -55,8 +73,13 @@ export const ConciergeService = () => {
           variant="default"
           className="flex flex-col items-center gap-2 h-auto py-4 bg-primary"
           onClick={() => handleBookNow(service)}
+          disabled={loadingServices[service]}
         >
-          Book Now
+          {loadingServices[service] ? (
+            <Loader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            'Book Now'
+          )}
         </Button>
       );
     }
