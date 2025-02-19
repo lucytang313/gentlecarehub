@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, ShoppingBag, Pill, Car } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useTickets } from '@/hooks/useTickets';
 
 type ServiceState = {
   [key: string]: boolean;
@@ -11,6 +12,7 @@ type ServiceState = {
 
 export const ConciergeService = () => {
   const { toast } = useToast();
+  const { addTicket } = useTickets();
   const [selectedServices, setSelectedServices] = useState<ServiceState>({});
 
   const handleServiceRequest = (service: string) => {
@@ -30,8 +32,10 @@ export const ConciergeService = () => {
       category: 'Concierge'
     };
 
-    // In a real application, you would send this to your backend
-    // For now, we'll just show a toast
+    // Add the ticket to the store
+    addTicket(newTicket);
+
+    // Show toast notification
     toast({
       title: "Ticket Created",
       description: `Your ${service} request has been created. Ticket ID: ${newTicket.id}`,
