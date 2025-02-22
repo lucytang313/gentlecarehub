@@ -54,9 +54,18 @@ export const TicketHistory = () => {
             filteredTickets.map((ticket) => (
               <div key={ticket.id} className="mb-4 p-3 border rounded-lg bg-white">
                 <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-medium text-sm">{ticket.title}</h4>
-                    <p className="text-xs text-muted-foreground">{ticket.date}</p>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium text-sm">{ticket.title}</h4>
+                      <span className="text-xs text-muted-foreground">#{ticket.id}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs text-muted-foreground">
+                        Opened: {new Date(ticket.date).toLocaleString()} 
+                        {ticket.status === 'closed' && ` - Closed: ${new Date(new Date(ticket.date).getTime() + 24*60*60*1000).toLocaleString()}`}
+                      </p>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Category: {ticket.category}</p>
                   </div>
                   <Badge variant={ticket.status === 'open' ? 'secondary' : 'outline'}>
                     {ticket.status}
