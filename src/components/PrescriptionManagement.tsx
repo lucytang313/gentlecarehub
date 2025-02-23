@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -70,6 +71,15 @@ export const PrescriptionManagement = () => {
                     onChange={(e) => setVisitDate(e.target.value)}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label>Upload Prescription File</Label>
+                  <Input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    className="cursor-pointer"
+                  />
+                  <p className="text-xs text-muted-foreground">Supported formats: PDF, JPG, PNG</p>
+                </div>
                 <Button onClick={handleUpload} className="w-full">
                   <Upload className="h-4 w-4 mr-2" />
                   Upload Prescription
@@ -113,6 +123,15 @@ export const PrescriptionManagement = () => {
                     value={visitDate}
                     onChange={(e) => setVisitDate(e.target.value)}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Upload Lab Report File</Label>
+                  <Input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    className="cursor-pointer"
+                  />
+                  <p className="text-xs text-muted-foreground">Supported formats: PDF, JPG, PNG</p>
                 </div>
                 <Button onClick={handleUpload} className="w-full">
                   <Upload className="h-4 w-4 mr-2" />
