@@ -8,18 +8,49 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Pill, Upload, FileText, FlaskConical } from 'lucide-react';
 
+type PrescriptionType = {
+  id: string;
+  doctorName: string;
+  visitDate: string;
+  fileName: string;
+  uploadDate: string;
+};
+
 export const PrescriptionManagement = () => {
   const { toast } = useToast();
   const [uploadType, setUploadType] = React.useState<'prescription' | 'lab'>('prescription');
   const [doctorName, setDoctorName] = React.useState('');
   const [visitDate, setVisitDate] = React.useState('');
   const [testName, setTestName] = React.useState('');
+  const [prescriptions, setPrescriptions] = React.useState<PrescriptionType[]>([]);
+  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
 
   const handleUpload = () => {
-    toast({
-      title: `${uploadType === 'prescription' ? 'Prescription' : 'Lab Report'} uploaded successfully`,
-      description: "Your document has been added to your records.",
-    });
+    if (uploadType === 'prescription' && selectedFile && doctorName && visitDate) {
+      const newPrescription: PrescriptionType = {
+        id: Math.random().toString(36).substr(2, 9),
+        doctorName,
+        visitDate,
+        fileName: selectedFile.name,
+        uploadDate: new Date().toISOString(),
+      };
+
+      setPrescriptions(prev => [newPrescription, ...prev].slice(0, 5));
+      setDoctorName('');
+      setVisitDate('');
+      setSelectedFile(null);
+
+      toast({
+        title: "Prescription uploaded successfully",
+        description: "Your document has been added to your records.",
+      });
+    }
   };
 
   return (
@@ -40,16 +71,25 @@ export const PrescriptionManagement = () => {
               <div className="space-y-2">
                 <h3 className="font-medium">Recent Prescriptions</h3>
                 <div className="grid gap-2">
-                  <div className="p-3 bg-gray-50 rounded-lg flex justify-between items-center">
-                    <div>
-                      <p className="font-medium">Dr. Rajesh Sharma - Cardiology</p>
-                      <p className="text-sm text-gray-600">Visit Date: 15th March 2024</p>
+                  {prescriptions.length === 0 ? (
+                    <div className="p-3 bg-gray-50 rounded-lg text-center text-gray-500">
+                      No prescriptions uploaded yet
                     </div>
-                    <Button variant="outline" size="sm">
-                      <FileText className="h-4 w-4 mr-2" />
-                      View
-                    </Button>
-                  </div>
+                  ) : (
+                    prescriptions.map((prescription) => (
+                      <div key={prescription.id} className="p-3 bg-gray-50 rounded-lg flex justify-between items-center">
+                        <div>
+                          <p className="font-medium">{prescription.doctorName}</p>
+                          <p className="text-sm text-gray-600">Visit Date: {new Date(prescription.visitDate).toLocaleDateString()}</p>
+                          <p className="text-xs text-gray-500">File: {prescription.fileName}</p>
+                        </div>
+                        <Button variant="outline" size="sm">
+                          <FileText className="h-4 w-4 mr-2" />
+                          View
+                        </Button>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -77,10 +117,15 @@ export const PrescriptionManagement = () => {
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
                     className="cursor-pointer"
+                    onChange={handleFileChange}
                   />
                   <p className="text-xs text-muted-foreground">Supported formats: PDF, JPG, PNG</p>
                 </div>
-                <Button onClick={handleUpload} className="w-full">
+                <Button 
+                  onClick={handleUpload} 
+                  className="w-full"
+                  disabled={!doctorName || !visitDate || !selectedFile}
+                >
                   <Upload className="h-4 w-4 mr-2" />
                   Upload Prescription
                 </Button>
