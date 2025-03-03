@@ -1,10 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, X, Users } from "lucide-react";
+import { Check, X, Users, Copy, Link } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 type ReferralUser = {
   id: string;
@@ -18,6 +21,30 @@ type ReferralUser = {
 };
 
 export const ReferralTracking = () => {
+  const { toast } = useToast();
+  // Generate a unique referral code
+  const referralCode = React.useMemo(() => {
+    const userPart = "caresanctum";
+    const randomPart = Math.random().toString(36).substring(2, 8);
+    return `${userPart}_${randomPart}`;
+  }, []);
+
+  const referralLink = `https://caresanctum.com/?referral_code=${referralCode}`;
+  
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(referralLink).then(() => {
+      setCopied(true);
+      toast({
+        title: "Referral link copied!",
+        description: "Share it with your friends and family",
+        duration: 2000,
+      });
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   // Mock data - in a real app, this would come from an API
   const [referrals] = React.useState<ReferralUser[]>([
     {
@@ -80,6 +107,39 @@ export const ReferralTracking = () => {
           My Referrals
         </CardTitle>
       </CardHeader>
+      
+      {/* Referral Link Section */}
+      <div className="px-6 pb-4">
+        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg border border-primary/20 shadow-sm">
+          <div className="mb-2 flex items-center gap-2">
+            <Link className="h-4 w-4 text-primary" />
+            <h3 className="font-semibold text-primary">Your Referral Link</h3>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Input 
+              value={referralLink}
+              readOnly
+              className="bg-white border-primary/20 text-sm font-medium focus-visible:ring-primary"
+            />
+            <Button 
+              onClick={handleCopyLink} 
+              size="sm" 
+              className="flex items-center gap-1 bg-primary hover:bg-primary/90 transition-all animate-scale-in"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4" /> Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4" /> Copy
+                </>
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+      
       <CardContent className="px-0">
         <div className="px-6 pb-2">
           <div className="grid grid-cols-5 text-sm font-medium text-muted-foreground border-b pb-2">
