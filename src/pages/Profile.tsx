@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, ArrowLeft } from 'lucide-react';
@@ -8,6 +9,7 @@ import { ContactCard } from '@/components/profile/ContactCard';
 import { EmergencyContactCard } from '@/components/profile/EmergencyContactCard';
 import { MedicalInfoCard } from '@/components/profile/MedicalInfoCard';
 import { LifestyleCard } from '@/components/profile/LifestyleCard';
+import { ReferralTracking } from '@/components/ReferralTracking';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -101,6 +103,11 @@ const Profile = () => {
         <EmergencyContactCard emergencyContact={profileData.emergencyContact} />
         <MedicalInfoCard medicalInfo={profileData.medicalInfo} />
         <LifestyleCard lifestyle={profileData.lifestyle} />
+        
+        {/* Add the ReferralTracking component here */}
+        <div className="my-8">
+          <ReferralTracking />
+        </div>
         
         <Button 
           variant="destructive" 

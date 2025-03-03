@@ -11,7 +11,6 @@ import { TicketHistory } from "@/components/TicketHistory";
 import { ConciergeService } from "@/components/ConciergeService";
 import { BuddyScheduler } from "@/components/BuddyScheduler";
 import { CommunityEvents } from "@/components/CommunityEvents";
-import { ReferralTracking } from "@/components/ReferralTracking";
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -37,8 +36,6 @@ const Home = () => {
         </div>
 
         <PrescriptionManagement />
-        
-        <ReferralTracking />
 
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="bg-gradient-to-br from-white to-gray-50 border-primary/10 shadow-lg">
