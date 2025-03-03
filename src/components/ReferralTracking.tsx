@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, X, Users, Copy, Link } from "lucide-react";
+import { Check, X, Users, Copy, Link, Trophy, Award, PartyPopper, ChartBar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Cell } from 'recharts';
 
 type ReferralUser = {
   id: string;
@@ -22,6 +24,8 @@ type ReferralUser = {
 
 export const ReferralTracking = () => {
   const { toast } = useToast();
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  
   // Generate a unique referral code
   const referralCode = React.useMemo(() => {
     const userPart = "caresanctum";
@@ -94,10 +98,23 @@ export const ReferralTracking = () => {
     }
   ]);
 
+  // Top earners data for leaderboard
+  const topEarners = [
+    { name: "Ananya D.", earnings: 1500, rank: 1 },
+    { name: "Rahul S.", earnings: 1200, rank: 2 },
+    { name: "Vikram S.", earnings: 950, rank: 3 }
+  ];
+  
+  // User's current rank
+  const currentUserRank = 2; // Mock data - would come from API in real app
+
   // Calculate summary metrics
   const totalReferred = referrals.length;
   const totalOnboarded = referrals.filter(user => user.isOnboarded).length;
   const totalEarnings = referrals.reduce((sum, user) => sum + user.earnings, 0);
+
+  // Colors for the chart bars
+  const chartColors = ['#D946EF', '#8B5CF6', '#0EA5E9'];
 
   return (
     <Card className="bg-gradient-to-br from-white to-gray-50 border-primary/10 shadow-lg">
@@ -105,6 +122,14 @@ export const ReferralTracking = () => {
         <CardTitle className="text-primary flex items-center gap-2">
           <Users className="h-5 w-5" />
           My Referrals
+          <button 
+            onClick={() => setShowLeaderboard(true)}
+            className="ml-2 inline-flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 text-white p-1.5 rounded-full hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
+            aria-label="View Leaderboard"
+            title="View Leaderboard"
+          >
+            <Trophy className="h-4 w-4" />
+          </button>
         </CardTitle>
       </CardHeader>
       
@@ -209,6 +234,86 @@ export const ReferralTracking = () => {
           <p className="font-semibold text-primary">₹{totalEarnings.toLocaleString()}</p>
         </div>
       </CardFooter>
+
+      {/* Celebration Leaderboard Modal */}
+      <Dialog open={showLeaderboard} onOpenChange={setShowLeaderboard}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#F8F9FA] to-[#F0F4F8] border-2 border-[#9b87f5]/30 shadow-xl overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWFzZjdnaTJrbWxmc3BkbnE1MXFzeXZwaTcwaHlwM2hkZWV0ZHJ3NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tOZ42Mg6pbTUPHW/giphy.gif')] opacity-20 bg-cover bg-center -z-10" />
+          
+          <div className="text-center mb-2">
+            <div className="inline-flex gap-2 items-center justify-center">
+              <PartyPopper className="h-6 w-6 text-[#D946EF]" />
+              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#D946EF] bg-clip-text text-transparent">
+                Top Referrers
+              </DialogTitle>
+              <Award className="h-6 w-6 text-[#8B5CF6]" />
+            </div>
+            <p className="text-gray-600 mt-1">Congratulations to our top performers!</p>
+          </div>
+
+          <div className="mt-4 pb-2">
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart 
+                data={topEarners} 
+                margin={{ top: 20, right: 30, left: 30, bottom: 10 }}
+                layout="vertical"
+              >
+                <XAxis type="number" hide />
+                <YAxis 
+                  dataKey="name" 
+                  type="category" 
+                  axisLine={false} 
+                  tickLine={false}
+                  tick={{ 
+                    fill: '#6E59A5', 
+                    fontSize: 14,
+                    fontWeight: 500
+                  }} 
+                />
+                <Bar 
+                  dataKey="earnings" 
+                  radius={[4, 4, 4, 4]}
+                  barSize={40}
+                  background={{ fill: '#f5f5f5' }}
+                >
+                  {topEarners.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                  ))}
+                  <LabelList 
+                    dataKey="earnings" 
+                    position="right" 
+                    formatter={(value: number) => `₹${value.toLocaleString()}`}
+                    style={{ 
+                      fill: '#333', 
+                      fontSize: 14,
+                      fontWeight: 600
+                    }} 
+                  />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="flex justify-between items-center bg-gradient-to-r from-[#9b87f5]/20 to-[#D946EF]/20 p-3 rounded-lg mt-2">
+            <div className="flex items-center gap-2">
+              <ChartBar className="h-5 w-5 text-[#8B5CF6]" />
+              <span className="text-gray-700 font-medium">Your Ranking</span>
+            </div>
+            <div className="bg-white px-4 py-1.5 rounded-full shadow-sm border border-[#9b87f5]/30">
+              <span className="font-bold text-[#6E59A5]">#{currentUserRank}</span>
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <Button 
+              onClick={() => setShowLeaderboard(false)}
+              className="bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7E69AB] hover:to-[#C935DE] border-none shadow-md hover:shadow-lg"
+            >
+              Keep Referring!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
