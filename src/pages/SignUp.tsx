@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,10 +11,21 @@ import { useToast } from "@/components/ui/use-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [dataSharing, setDataSharing] = useState(false);
   const [emergencyNotifications, setEmergencyNotifications] = useState(false);
+  const [referralCode, setReferralCode] = useState('');
+
+  useEffect(() => {
+    // Get referral code from URL if present
+    const params = new URLSearchParams(location.search);
+    const urlReferralCode = params.get('referral_code');
+    if (urlReferralCode) {
+      setReferralCode(urlReferralCode);
+    }
+  }, [location]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +77,14 @@ const SignUp = () => {
                 type="password"
                 placeholder="Confirm Password"
                 required
+              />
+            </div>
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder="Referral Code (Optional)"
+                value={referralCode}
+                onChange={(e) => setReferralCode(e.target.value)}
               />
             </div>
             <div className="space-y-3">
