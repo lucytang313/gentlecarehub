@@ -11,8 +11,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Users, Trophy, Award } from "lucide-react";
+import { Copy, Users, Trophy, Award, Medal, Sparkles } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type ReferralUserType = {
   name: string;
@@ -21,8 +23,17 @@ type ReferralUserType = {
   reward?: number;
 };
 
+// Leaderboard data type
+type LeaderboardEntryType = {
+  name: string;
+  referrals: number;
+  earnings: number;
+  avatar?: string;
+};
+
 export const ReferralTracking = () => {
   const { toast } = useToast();
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   
   // Generate referral code
   const referralCode = useMemo(() => {
@@ -44,6 +55,20 @@ export const ReferralTracking = () => {
     { name: "Vikram Singh", status: "pending", date: "2023-12-18" },
   ];
 
+  // Sample leaderboard data
+  const leaderboardData: LeaderboardEntryType[] = [
+    { name: "Rohan Mehta", referrals: 42, earnings: 6300 },
+    { name: "Shreya Gupta", referrals: 38, earnings: 5700 },
+    { name: "Vikram Malhotra", referrals: 31, earnings: 4650 },
+    { name: "Pawan Agarwal", referrals: 25, earnings: 3500 },
+    { name: "Anita Reddy", referrals: 23, earnings: 3450 },
+    { name: "Rahul Shah", referrals: 21, earnings: 3150 },
+    { name: "Meera Joshi", referrals: 18, earnings: 2700 },
+  ];
+  
+  // Current user's position in the leaderboard (index of Pawan Agarwal)
+  const currentUserPosition = leaderboardData.findIndex(entry => entry.name === "Pawan Agarwal");
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
       setCopied(true);
@@ -59,12 +84,113 @@ export const ReferralTracking = () => {
   return (
     <Card className="w-full" id="referrals">
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-amber-500" />
-          <CardTitle>My Referrals</CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-amber-500" />
+            <CardTitle>My Referrals</CardTitle>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-amber-100 text-amber-700 hover:bg-amber-200 hover:text-amber-800 rounded-full"
+            onClick={() => setShowLeaderboard(true)}
+          >
+            <Sparkles className="h-5 w-5 animate-pulse" />
+          </Button>
         </div>
         <CardDescription>Track your referrals and rewards</CardDescription>
       </CardHeader>
+      
+      {/* Leaderboard Dialog */}
+      <Dialog open={showLeaderboard} onOpenChange={setShowLeaderboard}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center flex items-center justify-center gap-2 text-2xl font-bold">
+              <Trophy className="h-6 w-6 text-amber-500" />
+              Referral Champions
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="bg-gradient-to-b from-amber-50 to-white p-4 rounded-lg">
+            {/* Celebration GIF */}
+            <div className="flex justify-center mb-4">
+              <img 
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTJtMW0xZnl4ajR1cGJ3eWcxOXE0YTA0NmpmbmY2anpoOG5ncmg0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4KhQo2MESJkc6QbS/giphy.gif" 
+                alt="Celebration" 
+                className="h-32 rounded-lg"
+              />
+            </div>
+            
+            {/* Top 3 Leaderboard */}
+            <div className="flex justify-center items-end gap-2 mb-6">
+              {/* 2nd Place */}
+              <div className="flex flex-col items-center">
+                <Avatar className="h-12 w-12 border-2 border-gray-300">
+                  <AvatarFallback className="bg-gray-200 text-gray-700">{leaderboardData[1].name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full text-gray-700 font-bold mt-2">2</div>
+                <p className="text-xs mt-1 font-medium">{leaderboardData[1].name.split(' ')[0]}</p>
+                <p className="text-xs">₹{leaderboardData[1].earnings}</p>
+              </div>
+              
+              {/* 1st Place */}
+              <div className="flex flex-col items-center">
+                <div className="relative">
+                  <Avatar className="h-16 w-16 border-2 border-amber-500">
+                    <AvatarFallback className="bg-amber-100 text-amber-700">{leaderboardData[0].name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <Medal className="h-6 w-6 text-amber-500" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-center w-8 h-8 bg-amber-500 rounded-full text-white font-bold mt-2">1</div>
+                <p className="text-xs mt-1 font-medium">{leaderboardData[0].name.split(' ')[0]}</p>
+                <p className="text-xs">₹{leaderboardData[0].earnings}</p>
+              </div>
+              
+              {/* 3rd Place */}
+              <div className="flex flex-col items-center">
+                <Avatar className="h-12 w-12 border-2 border-amber-700">
+                  <AvatarFallback className="bg-amber-50 text-amber-800">{leaderboardData[2].name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex items-center justify-center w-8 h-8 bg-amber-700 rounded-full text-white font-bold mt-2">3</div>
+                <p className="text-xs mt-1 font-medium">{leaderboardData[2].name.split(' ')[0]}</p>
+                <p className="text-xs">₹{leaderboardData[2].earnings}</p>
+              </div>
+            </div>
+            
+            {/* Your Ranking */}
+            <div className="bg-primary/10 p-3 rounded-lg border border-primary/20">
+              <h3 className="text-sm font-semibold text-center mb-2">Your Current Ranking</h3>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-7 h-7 bg-primary text-white rounded-full text-sm font-bold">
+                    {currentUserPosition + 1}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Pawan Agarwal</p>
+                    <p className="text-xs text-gray-600">{leaderboardData[currentUserPosition].referrals} referrals</p>
+                  </div>
+                </div>
+                <div className="text-lg font-bold text-primary">₹{leaderboardData[currentUserPosition].earnings}</div>
+              </div>
+            </div>
+            
+            {/* Call To Action */}
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-600 mb-2">Refer more friends to climb the leaderboard!</p>
+              <Button 
+                onClick={handleCopyLink}
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                {copied ? "Copied!" : "Copy Referral Link"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      
       <CardContent>
         <Tabs defaultValue="share">
           <TabsList className="w-full">
