@@ -12,6 +12,8 @@ import { ConciergeService } from "@/components/ConciergeService";
 import { BuddyScheduler } from "@/components/BuddyScheduler";
 import { CommunityEvents } from "@/components/CommunityEvents";
 import { useNavigate } from 'react-router-dom';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Info } from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,6 +23,36 @@ const Home = () => {
       <HomeHeader />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex items-center gap-2 mb-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/80 shadow-sm border border-primary/10 cursor-help">
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7b/Apollo_Hospitals_Logo.svg/1200px-Apollo_Hospitals_Logo.svg.png" 
+                    alt="Apollo Hospitals" 
+                    className="h-5 mr-2 object-contain" 
+                  />
+                  <span className="text-sm font-medium text-primary">Apollo Enterprise Plan</span>
+                  <Info className="h-4 w-4 text-primary/60 ml-1.5" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right" align="start" className="bg-white p-4 shadow-lg border border-primary/10 max-w-sm">
+                <div>
+                  <h4 className="font-semibold text-primary text-base">Enterprise Benefits</h4>
+                  <p className="text-gray-600 mt-1 mb-2">You're enrolled through Apollo Hospitals corporate wellness program.</p>
+                  <ul className="text-sm space-y-1 text-gray-600 list-disc pl-4">
+                    <li>Priority access to specialists</li>
+                    <li>Corporate discount on services</li>
+                    <li>Quarterly wellness workshops</li>
+                    <li>24/7 dedicated concierge support</li>
+                  </ul>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
         <HealthStatusCard />
         <PrimaryVitals />
         <AdditionalHealthMetrics />

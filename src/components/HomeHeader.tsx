@@ -1,13 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Link, Copy, Users, Trophy } from 'lucide-react';
+import { Bell, Link, Copy, Users, Trophy, Info } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
@@ -65,7 +66,31 @@ export const HomeHeader = () => {
   return (
     <header className="bg-white shadow-lg border-b border-primary/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <Logo />
+        <div className="flex items-center gap-3">
+          <Logo />
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center cursor-help">
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7b/Apollo_Hospitals_Logo.svg/1200px-Apollo_Hospitals_Logo.svg.png" 
+                    alt="Apollo Hospitals" 
+                    className="h-6 ml-2 object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  />
+                  <Info className="h-3.5 w-3.5 text-primary/60 ml-1" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-white p-3 shadow-lg border border-primary/10 max-w-xs">
+                <div className="text-sm">
+                  <span className="font-semibold text-primary">Enterprise User</span>
+                  <p className="text-gray-600 mt-1">Onboarded by Apollo Hospitals under their corporate wellness program.</p>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        
         <div className="flex items-center gap-4">
           <Button 
             variant="destructive"
