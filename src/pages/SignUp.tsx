@@ -21,7 +21,7 @@ const SignUp = () => {
   useEffect(() => {
     // Get referral code from URL if present
     const params = new URLSearchParams(location.search);
-    const urlReferralCode = params.get('referral_code');
+    const urlReferralCode = params.get('referal_code'); // Note: using 'referal_code' to match the URL format
     if (urlReferralCode) {
       setReferralCode(urlReferralCode);
     }

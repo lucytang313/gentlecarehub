@@ -21,7 +21,7 @@ export const HomeHeader = () => {
     return `${userPart}_${randomPart}`;
   }, []);
 
-  const referralLink = `https://caresanctum.com/?referral_code=${referralCode}`;
+  const referralLink = `https://preview--gentlecarehub.lovable.app/signup?referal_code=${referralCode}`;
 
   const handleEmergency = () => {
     toast({
