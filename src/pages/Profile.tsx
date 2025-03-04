@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { LogOut, ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,7 +13,28 @@ import { ReferralTracking } from '@/components/ReferralTracking';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+
+  // Check if we need to scroll to the referrals section
+  useEffect(() => {
+    if (location.hash === '#referrals') {
+      const referralsElement = document.getElementById('referrals');
+      if (referralsElement) {
+        // Add a small delay to ensure rendering is complete
+        setTimeout(() => {
+          referralsElement.scrollIntoView({ behavior: 'smooth' });
+          
+          // Show toast for referral achievement
+          toast({
+            title: "🏆 Your Referral Status",
+            description: "Pawan Agarwal referred 25 members and earned ₹3,500",
+            duration: 4000,
+          });
+        }, 300);
+      }
+    }
+  }, [location.hash, toast]);
 
   const handleSignOut = () => {
     toast({

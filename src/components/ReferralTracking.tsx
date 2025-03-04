@@ -1,33 +1,31 @@
 
-import React, { useState } from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, X, Users, Copy, Link, Trophy, Award, PartyPopper, ChartBar } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import React, { useState, useMemo } from 'react';
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle 
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Copy, Users, Trophy, Award } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Cell } from 'recharts';
 
-type ReferralUser = {
-  id: string;
+type ReferralUserType = {
   name: string;
-  email: string;
-  avatar?: string;
-  isOnboarded: boolean;
-  earningsPercentage: number;
-  earnings: number;
-  referredDate: string;
+  status: 'pending' | 'completed';
+  date: string;
+  reward?: number;
 };
 
 export const ReferralTracking = () => {
   const { toast } = useToast();
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
   
-  // Generate a unique referral code
-  const referralCode = React.useMemo(() => {
+  // Generate referral code
+  const referralCode = useMemo(() => {
     const userPart = "caresanctum";
     const randomPart = Math.random().toString(36).substring(2, 8);
     return `${userPart}_${randomPart}`;
@@ -36,6 +34,15 @@ export const ReferralTracking = () => {
   const referralLink = `https://preview--gentlecarehub.lovable.app/signup?referal_code=${referralCode}`;
   
   const [copied, setCopied] = useState(false);
+
+  // Sample data for referred users
+  const referredUsers: ReferralUserType[] = [
+    { name: "Sanjay Kumar", status: "completed", date: "2023-12-10", reward: 150 },
+    { name: "Priya Sharma", status: "pending", date: "2023-12-15" },
+    { name: "Rajesh Patel", status: "completed", date: "2023-11-28", reward: 150 },
+    { name: "Anita Desai", status: "completed", date: "2023-11-20", reward: 150 },
+    { name: "Vikram Singh", status: "pending", date: "2023-12-18" },
+  ];
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
@@ -49,271 +56,163 @@ export const ReferralTracking = () => {
     });
   };
 
-  // Mock data - in a real app, this would come from an API
-  const [referrals] = React.useState<ReferralUser[]>([
-    {
-      id: "1",
-      name: "Rahul Sharma",
-      email: "rahul.s@example.com",
-      isOnboarded: true,
-      earningsPercentage: 5,
-      earnings: 1200,
-      referredDate: "2024-03-15"
-    },
-    {
-      id: "2",
-      name: "Priya Patel",
-      email: "priya.p@example.com",
-      isOnboarded: false,
-      earningsPercentage: 0,
-      earnings: 0,
-      referredDate: "2024-03-25"
-    },
-    {
-      id: "3",
-      name: "Vikram Singh",
-      email: "vikram@example.com",
-      isOnboarded: true,
-      earningsPercentage: 5,
-      earnings: 950,
-      referredDate: "2024-04-02"
-    },
-    {
-      id: "4",
-      name: "Ananya Desai",
-      email: "ananya.d@example.com",
-      isOnboarded: true,
-      earningsPercentage: 5,
-      earnings: 1500,
-      referredDate: "2024-04-10"
-    },
-    {
-      id: "5",
-      name: "Karthik Reddy",
-      email: "karthik@example.com",
-      isOnboarded: false,
-      earningsPercentage: 0,
-      earnings: 0,
-      referredDate: "2024-04-15"
-    }
-  ]);
-
-  // Top earners data for leaderboard
-  const topEarners = [
-    { name: "Ananya D.", earnings: 1500, rank: 1 },
-    { name: "Rahul S.", earnings: 1200, rank: 2 },
-    { name: "Vikram S.", earnings: 950, rank: 3 }
-  ];
-  
-  // User's current rank
-  const currentUserRank = 2; // Mock data - would come from API in real app
-
-  // Calculate summary metrics
-  const totalReferred = referrals.length;
-  const totalOnboarded = referrals.filter(user => user.isOnboarded).length;
-  const totalEarnings = referrals.reduce((sum, user) => sum + user.earnings, 0);
-
-  // Colors for the chart bars
-  const chartColors = ['#D946EF', '#8B5CF6', '#0EA5E9'];
-
   return (
-    <Card className="bg-gradient-to-br from-white to-gray-50 border-primary/10 shadow-lg">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-primary flex items-center gap-2">
-          <Users className="h-5 w-5" />
-          My Referrals
-          <button 
-            onClick={() => setShowLeaderboard(true)}
-            className="ml-2 inline-flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 text-white p-1.5 rounded-full hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
-            aria-label="View Leaderboard"
-            title="View Leaderboard"
-          >
-            <Trophy className="h-4 w-4" />
-          </button>
-        </CardTitle>
+    <Card className="w-full" id="referrals">
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Trophy className="h-5 w-5 text-amber-500" />
+          <CardTitle>My Referrals</CardTitle>
+        </div>
+        <CardDescription>Track your referrals and rewards</CardDescription>
       </CardHeader>
-      
-      {/* Referral Link Section */}
-      <div className="px-6 pb-4">
-        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg border border-primary/20 shadow-sm">
-          <div className="mb-2 flex items-center gap-2">
-            <Link className="h-4 w-4 text-primary" />
-            <h3 className="font-semibold text-primary">Your Referral Link</h3>
-          </div>
-          <div className="flex gap-2 items-center">
-            <Input 
-              value={referralLink}
-              readOnly
-              className="bg-white border-primary/20 text-sm font-medium focus-visible:ring-primary"
-            />
-            <Button 
-              onClick={handleCopyLink} 
-              size="sm" 
-              className="flex items-center gap-1 bg-primary hover:bg-primary/90 transition-all animate-scale-in"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4" /> Copied
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4" /> Copy
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-      
-      <CardContent className="px-0">
-        <div className="px-6 pb-2">
-          <div className="grid grid-cols-5 text-sm font-medium text-muted-foreground border-b pb-2">
-            <div className="col-span-2">User Referred</div>
-            <div className="text-center">User Onboarded</div>
-            <div className="text-center">Earnings %</div>
-            <div className="text-center">Earnings (₹)</div>
-          </div>
-        </div>
-        
-        <ScrollArea className="h-[300px]">
-          <div className="px-6">
-            {referrals.map((referral) => (
-              <div 
-                key={referral.id} 
-                className="grid grid-cols-5 py-3 border-b border-dashed last:border-b-0 hover:bg-gray-50 transition-colors text-sm items-center"
-              >
-                <div className="col-span-2 flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={referral.avatar} />
-                    <AvatarFallback className="bg-primary/10 text-primary">
-                      {referral.name.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium">{referral.name}</p>
-                    <p className="text-xs text-muted-foreground">{referral.email}</p>
-                  </div>
-                </div>
-                <div className="flex justify-center">
-                  {referral.isOnboarded ? (
-                    <Badge variant="default" className="bg-green-600 hover:bg-green-700">
-                      <Check className="h-3 w-3 mr-1" />
-                      Yes
-                    </Badge>
+      <CardContent>
+        <Tabs defaultValue="share">
+          <TabsList className="w-full">
+            <TabsTrigger value="share" className="flex-1">Share & Earn</TabsTrigger>
+            <TabsTrigger value="history" className="flex-1">Referral History</TabsTrigger>
+            <TabsTrigger value="rewards" className="flex-1">My Rewards</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="share" className="space-y-4">
+            <div className="mt-4 bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg border border-primary/20">
+              <div className="mb-2 flex items-center gap-2">
+                <Users className="h-4 w-4 text-primary" />
+                <h3 className="font-semibold">Your Referral Link</h3>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Input 
+                  value={referralLink}
+                  readOnly
+                  className="bg-white border-primary/20"
+                />
+                <Button 
+                  onClick={handleCopyLink} 
+                  size="sm" 
+                  className="whitespace-nowrap flex items-center gap-1"
+                >
+                  {copied ? (
+                    <>
+                      <Copy className="h-4 w-4" /> Copied
+                    </>
                   ) : (
-                    <Badge variant="default" className="bg-red-600 hover:bg-red-700">
-                      <X className="h-3 w-3 mr-1" />
-                      No
-                    </Badge>
+                    <>
+                      <Copy className="h-4 w-4" /> Copy
+                    </>
                   )}
+                </Button>
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-gray-200 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-full">
+                  <Award className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-center font-medium">
-                  {referral.earningsPercentage > 0 ? `${referral.earningsPercentage}%` : '-'}
-                </div>
-                <div className="text-center font-medium">
-                  {referral.earnings > 0 ? `₹${referral.earnings.toLocaleString()}` : '-'}
+                <div>
+                  <h3 className="font-semibold">How it works</h3>
+                  <p className="text-sm text-gray-500">Refer friends and family to earn rewards</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </ScrollArea>
-      </CardContent>
-      <CardFooter className="bg-gray-50 rounded-b-lg border-t flex justify-between">
-        <div className="flex gap-6">
-          <div>
-            <p className="text-xs text-muted-foreground">Total Referred</p>
-            <p className="font-semibold text-primary">{totalReferred}</p>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground">Total Onboarded</p>
-            <p className="font-semibold text-primary">{totalOnboarded}</p>
-          </div>
-        </div>
-        <div>
-          <p className="text-xs text-muted-foreground">Total Earnings</p>
-          <p className="font-semibold text-primary">₹{totalEarnings.toLocaleString()}</p>
-        </div>
-      </CardFooter>
-
-      {/* Celebration Leaderboard Modal */}
-      <Dialog open={showLeaderboard} onOpenChange={setShowLeaderboard}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#F8F9FA] to-[#F0F4F8] border-2 border-[#9b87f5]/30 shadow-xl overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWFzZjdnaTJrbWxmc3BkbnE1MXFzeXZwaTcwaHlwM2hkZWV0ZHJ3NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tOZ42Mg6pbTUPHW/giphy.gif')] opacity-20 bg-cover bg-center -z-10" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-3 bg-gray-50 rounded-lg text-center">
+                  <div className="mx-auto w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full text-primary font-bold mb-2">1</div>
+                  <h4 className="font-semibold text-sm">Share your link</h4>
+                  <p className="text-xs text-gray-500">Send your unique referral link to friends</p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-lg text-center">
+                  <div className="mx-auto w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full text-primary font-bold mb-2">2</div>
+                  <h4 className="font-semibold text-sm">They sign up</h4>
+                  <p className="text-xs text-gray-500">Your friends create an account</p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-lg text-center">
+                  <div className="mx-auto w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full text-primary font-bold mb-2">3</div>
+                  <h4 className="font-semibold text-sm">You earn rewards</h4>
+                  <p className="text-xs text-gray-500">Get ₹150 for each successful referral</p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
           
-          <div className="text-center mb-2">
-            <div className="inline-flex gap-2 items-center justify-center">
-              <PartyPopper className="h-6 w-6 text-[#D946EF]" />
-              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#D946EF] bg-clip-text text-transparent">
-                Top Referrers
-              </DialogTitle>
-              <Award className="h-6 w-6 text-[#8B5CF6]" />
+          <TabsContent value="history">
+            <div className="space-y-4 mt-4">
+              <div className="flex items-center justify-between pb-2 border-b">
+                <h3 className="font-semibold">Referred Users</h3>
+                <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded-full">
+                  Total: {referredUsers.length}
+                </span>
+              </div>
+              
+              {referredUsers.map((user, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-semibold">
+                      {user.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{user.name}</h4>
+                      <p className="text-xs text-gray-500">Referred on {new Date(user.date).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                  <div>
+                    {user.status === 'completed' ? (
+                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                        Completed • ₹{user.reward}
+                      </span>
+                    ) : (
+                      <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                        Pending
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <p className="text-gray-600 mt-1">Congratulations to our top performers!</p>
-          </div>
-
-          <div className="mt-4 pb-2">
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart 
-                data={topEarners} 
-                margin={{ top: 20, right: 30, left: 30, bottom: 10 }}
-                layout="vertical"
-              >
-                <XAxis type="number" hide />
-                <YAxis 
-                  dataKey="name" 
-                  type="category" 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ 
-                    fill: '#6E59A5', 
-                    fontSize: 14,
-                    fontWeight: 500
-                  }} 
-                />
-                <Bar 
-                  dataKey="earnings" 
-                  radius={[4, 4, 4, 4]}
-                  barSize={40}
-                  background={{ fill: '#f5f5f5' }}
-                >
-                  {topEarners.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-                  ))}
-                  <LabelList 
-                    dataKey="earnings" 
-                    position="right" 
-                    formatter={(value: number) => `₹${value.toLocaleString()}`}
-                    style={{ 
-                      fill: '#333', 
-                      fontSize: 14,
-                      fontWeight: 600
-                    }} 
-                  />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="flex justify-between items-center bg-gradient-to-r from-[#9b87f5]/20 to-[#D946EF]/20 p-3 rounded-lg mt-2">
-            <div className="flex items-center gap-2">
-              <ChartBar className="h-5 w-5 text-[#8B5CF6]" />
-              <span className="text-gray-700 font-medium">Your Ranking</span>
+          </TabsContent>
+          
+          <TabsContent value="rewards">
+            <div className="space-y-4 mt-4">
+              <div className="bg-gradient-to-r from-amber-50 to-amber-100 p-4 rounded-lg border border-amber-200 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Trophy className="h-6 w-6 text-amber-500" />
+                  <div>
+                    <h3 className="font-semibold">Total Rewards Earned</h3>
+                    <p className="text-sm text-gray-600">Keep referring to earn more!</p>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-amber-600">₹450</div>
+              </div>
+              
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h3 className="font-semibold mb-3">Recent Rewards</h3>
+                <div className="space-y-2">
+                  {referredUsers
+                    .filter(user => user.status === 'completed')
+                    .map((user, index) => (
+                      <div key={index} className="flex items-center justify-between py-2 border-b last:border-0">
+                        <div className="flex items-center gap-2">
+                          <Award className="h-4 w-4 text-primary" />
+                          <span>{user.name}</span>
+                        </div>
+                        <div className="font-medium">₹{user.reward}</div>
+                      </div>
+                    ))}
+                </div>
+              </div>
             </div>
-            <div className="bg-white px-4 py-1.5 rounded-full shadow-sm border border-[#9b87f5]/30">
-              <span className="font-bold text-[#6E59A5]">#{currentUserRank}</span>
-            </div>
-          </div>
-
-          <div className="flex justify-center mt-4">
-            <Button 
-              onClick={() => setShowLeaderboard(false)}
-              className="bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7E69AB] hover:to-[#C935DE] border-none shadow-md hover:shadow-lg"
-            >
-              Keep Referring!
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+      <CardFooter className="flex justify-center border-t pt-4">
+        <Button 
+          onClick={handleCopyLink}
+          variant="outline"
+          className="w-full sm:w-auto flex items-center gap-2"
+        >
+          <Copy className="h-4 w-4" />
+          {copied ? "Copied!" : "Copy Referral Link"}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

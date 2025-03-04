@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Link, Copy, Users } from 'lucide-react';
+import { Bell, Link, Copy, Users, Trophy } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
 import { useToast } from "@/components/ui/use-toast";
@@ -23,6 +23,20 @@ export const HomeHeader = () => {
 
   const referralLink = `https://preview--gentlecarehub.lovable.app/signup?referal_code=${referralCode}`;
 
+  // Show acquisition toast messages on component mount
+  useEffect(() => {
+    // Show referral achievement toast after a short delay
+    const timer = setTimeout(() => {
+      toast({
+        title: "🎉 Referral Achievement!",
+        description: "Pawan Agarwal referred 25 members and earned ₹3,500",
+        duration: 5000,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [toast]);
+
   const handleEmergency = () => {
     toast({
       title: "Emergency assistance requested",
@@ -41,6 +55,11 @@ export const HomeHeader = () => {
       });
       setTimeout(() => setCopied(false), 2000);
     });
+  };
+
+  const navigateToReferrals = () => {
+    // Navigate to profile page and scroll to referrals section
+    navigate('/profile#referrals');
   };
 
   return (
@@ -108,10 +127,10 @@ export const HomeHeader = () => {
 
                 <div className="mt-6 flex justify-center">
                   <Button
-                    onClick={() => navigate('/profile')}
+                    onClick={navigateToReferrals}
                     className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-md hover:shadow-lg transition-all"
                   >
-                    <Users className="mr-2 h-5 w-5" />
+                    <Trophy className="mr-2 h-5 w-5" />
                     View My Referrals
                   </Button>
                 </div>
