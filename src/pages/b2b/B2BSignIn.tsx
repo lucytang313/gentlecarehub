@@ -5,30 +5,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Logo } from '@/components/Logo';
-import { Info } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
 
-const SignIn = () => {
+const B2BSignIn = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/home');
+    
+    toast({
+      title: "Welcome back!",
+      description: "Successfully signed in as a B2B partner",
+    });
+    
+    navigate('/b2b/dashboard');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-violet-100/30">
       <Card className="w-[400px]">
         <CardHeader className="space-y-1 flex flex-col items-center">
           <Logo />
-          <CardTitle className="text-2xl mt-4">Sign in to your account</CardTitle>
+          <CardTitle className="text-2xl mt-4">Partner Sign In</CardTitle>
+          <p className="text-sm text-muted-foreground">Manage your referrals and earnings</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Input
                 type="email"
-                placeholder="Email"
+                placeholder="Business Email"
                 required
               />
             </div>
@@ -39,29 +46,20 @@ const SignIn = () => {
                 required
               />
             </div>
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder="Referral Code (Optional)"
+              />
+            </div>
             <Button type="submit" className="w-full">
               Sign In
             </Button>
           </form>
           <div className="mt-4 text-center">
-            <a href="/signup" className="text-sm text-primary hover:underline">
-              Don't have an account? Sign up
+            <a href="/signin" className="text-sm text-primary hover:underline">
+              Back to regular sign in
             </a>
-          </div>
-          <div className="mt-2 text-center">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a href="/b2b/signin" className="text-sm text-violet-600 hover:underline flex items-center justify-center gap-1">
-                    <span>Login as a partner</span>
-                    <Info className="h-3 w-3" />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="text-sm max-w-xs">Refer people and earn for every referral</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </div>
         </CardContent>
       </Card>
@@ -69,4 +67,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default B2BSignIn;
