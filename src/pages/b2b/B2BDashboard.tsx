@@ -64,7 +64,7 @@ const mockNotifications: Notification[] = [
     userId: '1',
     userName: 'Pawan Agarwal',
     type: 'success',
-    message: 'Pawan Agarwal successfully onboarded with your referral. You earned ₹3,000!',
+    message: 'Pawan Agarwal successfully onboarded with your referral. You earned 3000',
     earnings: 3000,
     date: '2023-11-15T10:35:00Z',
     read: false
@@ -74,7 +74,7 @@ const mockNotifications: Notification[] = [
     userId: '2',
     userName: 'Arvind Kumar',
     type: 'failure',
-    message: 'Arvind Kumar referral didn't succeed. Sorry for that.',
+    message: 'abc',
     date: '2023-12-05T14:30:00Z',
     read: true
   },
@@ -83,7 +83,7 @@ const mockNotifications: Notification[] = [
     userId: '3',
     userName: 'Sangeeta Mehta',
     type: 'success',
-    message: 'Sangeeta Mehta successfully onboarded with your referral. You earned ₹3,000!',
+    message: 'Sangeeta Mehta successfully onboarded with your referral. You earned 2000!',
     earnings: 3000,
     date: '2023-10-22T08:30:00Z',
     read: true
@@ -93,7 +93,7 @@ const mockNotifications: Notification[] = [
     userId: '5',
     userName: 'Priya Patel',
     type: 'success',
-    message: 'Priya Patel successfully onboarded with your referral. You earned ₹3,000!',
+    message: 'Priya Patel successfully onboarded with your referral. You earned ₹3000!',
     earnings: 3000,
     date: '2023-09-30T11:40:00Z',
     read: true
