@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, ArrowLeft } from 'lucide-react';
+import { LogOut, ArrowLeft, Info } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { PersonalInfoCard } from '@/components/profile/PersonalInfoCard';
@@ -10,6 +10,7 @@ import { EmergencyContactCard } from '@/components/profile/EmergencyContactCard'
 import { MedicalInfoCard } from '@/components/profile/MedicalInfoCard';
 import { LifestyleCard } from '@/components/profile/LifestyleCard';
 import { ReferralTracking } from '@/components/ReferralTracking';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -107,7 +108,31 @@ const Profile = () => {
               Back to Home
             </Button>
             <h1 className="text-xl font-bold">Profile</h1>
+            
+            {/* Apollo Organization Badge with Tooltip */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-primary/5 px-3 py-1 rounded-full flex items-center gap-2 cursor-help border border-primary/10">
+                    <img 
+                      src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7b/Apollo_Hospitals_Logo.svg/1200px-Apollo_Hospitals_Logo.svg.png" 
+                      alt="Apollo Hospitals" 
+                      className="h-4 object-contain" 
+                    />
+                    <span className="text-xs font-medium text-primary">Enterprise Plan</span>
+                    <Info className="h-3 w-3 text-primary/60" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="space-y-2 max-w-xs">
+                    <p className="font-medium">Apollo Hospitals Corporate Wellness Program</p>
+                    <p className="text-sm">You have been referred by Apollo Hospitals as part of their corporate wellness initiative.</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
+          
           <Button 
             onClick={() => navigate('/onboarding')} 
             variant="outline"
