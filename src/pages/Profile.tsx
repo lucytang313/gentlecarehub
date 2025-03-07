@@ -125,8 +125,7 @@ const Profile = () => {
         <MedicalInfoCard medicalInfo={profileData.medicalInfo} />
         <LifestyleCard lifestyle={profileData.lifestyle} />
         
-        {/* Add the ReferralTracking component here */}
-        <div className="my-8">
+        <div id="referrals" className="my-8">
           <ReferralTracking />
         </div>
         
