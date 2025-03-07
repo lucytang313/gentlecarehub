@@ -74,7 +74,7 @@ const mockNotifications: Notification[] = [
     userId: '2',
     userName: 'Arvind Kumar',
     type: 'failure',
-    message: 'Arvind Kumar's referral didn't succeed. Sorry for that.',
+    message: 'Arvind Kumar referral didn't succeed. Sorry for that.',
     date: '2023-12-05T14:30:00Z',
     read: true
   },
