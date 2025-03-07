@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogOut, ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { PersonalInfoCard } from '@/components/profile/PersonalInfoCard';
 import { ContactCard } from '@/components/profile/ContactCard';
 import { EmergencyContactCard } from '@/components/profile/EmergencyContactCard';

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bell, Link, Copy, Users, Trophy, Info } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Logo } from './Logo';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";

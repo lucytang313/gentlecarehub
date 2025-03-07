@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { PersonalInfoSection } from './onboarding/PersonalInfoSection';
 import { ContactSection } from './onboarding/ContactSection';
 import { EmergencyContactSection } from './onboarding/EmergencyContactSection';
