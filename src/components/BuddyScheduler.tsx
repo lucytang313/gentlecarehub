@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -61,16 +62,16 @@ export const BuddyScheduler = () => {
         ];
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 h-full flex flex-col">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
           className="rounded-md border"
         />
-        <div className="space-y-2">
+        <div className="space-y-2 flex-1">
           <Label>Select Time Slot {type === 'care-manager' ? '(30 minutes)' : type === 'doctor' ? '(15 minutes)' : '(4 hours)'}</Label>
-          <RadioGroup onValueChange={setTimeSlot} value={timeSlot}>
+          <RadioGroup onValueChange={setTimeSlot} value={timeSlot} className="flex-1">
             {slots.map((slot) => (
               <div key={slot} className="flex items-center space-x-2">
                 <RadioGroupItem value={slot} id={slot} />
@@ -80,7 +81,7 @@ export const BuddyScheduler = () => {
           </RadioGroup>
         </div>
         <Button 
-          className="w-full" 
+          className="w-full mt-auto" 
           onClick={() => handleSchedule(type)}
           disabled={!date || !timeSlot}
         >
@@ -91,36 +92,36 @@ export const BuddyScheduler = () => {
   };
 
   return (
-    <Card className="shadow-md">
+    <Card className="shadow-md h-full">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-primary">Schedule Visits</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="care-manager" className="space-y-4">
+      <CardContent className="flex-1 flex flex-col">
+        <Tabs defaultValue="care-manager" className="space-y-4 h-full flex flex-col">
           <TabsList className="grid grid-cols-3 gap-4">
             <TabsTrigger value="care-manager">Care Manager</TabsTrigger>
             <TabsTrigger value="doctor">Doctor</TabsTrigger>
             <TabsTrigger value="buddy">Buddy</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="care-manager" className="space-y-4">
+          <TabsContent value="care-manager" className="space-y-4 flex-1 flex flex-col">
             {!showCareManagerScheduler ? (
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg flex-1 flex flex-col">
                 <h3 className="font-medium mb-2">Next Scheduled Visit</h3>
                 <p className="text-sm text-gray-600">Tomorrow, 9:00 AM - 9:30 AM</p>
-                <Button variant="outline" className="mt-2" onClick={() => setShowCareManagerScheduler(true)}>
+                <Button variant="outline" className="mt-auto" onClick={() => setShowCareManagerScheduler(true)}>
                   Reschedule
                 </Button>
               </div>
             ) : renderScheduler('care-manager')}
           </TabsContent>
 
-          <TabsContent value="doctor" className="space-y-4">
+          <TabsContent value="doctor" className="space-y-4 flex-1 flex flex-col">
             {!showDoctorScheduler ? (
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg flex-1 flex flex-col">
                 <h3 className="font-medium mb-2">Next Teleconsultation</h3>
                 <p className="text-sm text-gray-600">Today, 4:00 PM - 4:15 PM</p>
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-2 mt-auto">
                   <Button variant="outline" onClick={() => setShowDoctorScheduler(true)}>
                     Reschedule
                   </Button>
@@ -133,7 +134,7 @@ export const BuddyScheduler = () => {
             ) : renderScheduler('doctor')}
           </TabsContent>
 
-          <TabsContent value="buddy" className="space-y-4">
+          <TabsContent value="buddy" className="space-y-4 flex-1 flex flex-col">
             {renderScheduler('buddy')}
           </TabsContent>
         </Tabs>
