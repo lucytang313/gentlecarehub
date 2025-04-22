@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,8 +10,6 @@ import Profile from "./pages/Profile";
 import Payments from "./pages/Payments";
 import NotFound from "./pages/NotFound";
 import Onboarding from "./pages/Onboarding";
-import B2BDashboard from "./pages/b2b/B2BDashboard";
-import B2BSignIn from "./pages/b2b/B2BSignIn";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,8 +44,6 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/payments" element={<Payments />} />
-            <Route path="/b2b/signin" element={<B2BSignIn />} />
-            <Route path="/b2b/dashboard" element={<B2BDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TooltipProvider>
