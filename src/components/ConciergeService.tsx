@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, ShoppingBag, Pill, Car, Loader2 } from 'lucide-react';
+import { Phone, ShoppingBag, Pill, Car, Loader2, Lock } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useTickets } from '@/hooks/useTickets';
 
@@ -15,10 +16,14 @@ type LoadingState = {
 };
 
 export const ConciergeService = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { addTicket } = useTickets();
   const [selectedServices, setSelectedServices] = useState<ServiceState>({});
   const [loadingServices, setLoadingServices] = useState<LoadingState>({});
+  
+  // Temporary mock - replace with actual subscription check
+  const isPremiumUser = false;
 
   const handleServiceRequest = (service: string) => {
     setSelectedServices(prev => ({
@@ -95,6 +100,32 @@ export const ConciergeService = () => {
       </Button>
     );
   };
+
+  if (!isPremiumUser) {
+    return (
+      <Card className="shadow-md bg-gradient-to-br from-gray-50 to-gray-100">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold text-primary">Concierge Services</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center justify-center text-center space-y-6 py-8">
+          <div className="flex flex-col items-center space-y-4">
+            <Lock className="h-12 w-12 text-primary/60" />
+            <h3 className="text-lg font-semibold">Premium Feature</h3>
+            <p className="text-gray-600 max-w-sm">
+              Upgrade to Premium to unlock Concierge Services including medicine delivery, 
+              cab booking, grocery shopping, and personal assistance.
+            </p>
+          </div>
+          <Button 
+            onClick={() => navigate('/payments')} 
+            className="bg-primary hover:bg-primary/90 w-full max-w-sm"
+          >
+            Upgrade to Premium
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="shadow-md">
