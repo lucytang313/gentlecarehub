@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { Droplets, Activity, Scale, Moon, Brain, Gauge } from 'lucide-react';
-import { HealthMetricCard } from './HealthMetricCard';
+import { ExpandableHealthMetricCard } from './ExpandableHealthMetricCard';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const generateTrendData = (baseValue: number, variance: number) => {
   return Array.from({ length: 7 }, (_, i) => ({
@@ -10,11 +12,13 @@ const generateTrendData = (baseValue: number, variance: number) => {
 };
 
 export const AdditionalHealthMetrics = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-primary">Additional Health Metrics</h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <HealthMetricCard
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+        <ExpandableHealthMetricCard
           title="Blood Sugar"
           value="95 mg/dL"
           icon={<Droplets className="h-4 w-4" />}
@@ -24,7 +28,7 @@ export const AdditionalHealthMetrics = () => {
           unit="Milligrams per Deciliter (mg/dL)"
           normalRange="70-99 mg/dL (fasting)"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="ECG"
           value="Normal"
           icon={<Activity className="h-4 w-4" />}
@@ -33,7 +37,7 @@ export const AdditionalHealthMetrics = () => {
           description="Electrocardiogram (ECG) measures the electrical activity of your heart. It helps detect irregular heartbeats and other heart conditions."
           normalRange="Normal sinus rhythm"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="BMI"
           value="22.4"
           icon={<Scale className="h-4 w-4" />}
@@ -43,7 +47,7 @@ export const AdditionalHealthMetrics = () => {
           unit="kg/m²"
           normalRange="18.5-24.9"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Sleep Level"
           value="7.5 hrs"
           icon={<Moon className="h-4 w-4" />}
@@ -53,7 +57,7 @@ export const AdditionalHealthMetrics = () => {
           unit="Hours"
           normalRange="7-9 hours per night"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Stress Level"
           value="Low"
           icon={<Brain className="h-4 w-4" />}
@@ -62,7 +66,7 @@ export const AdditionalHealthMetrics = () => {
           description="Stress level indicates your current mental and emotional state. It's measured through various physiological indicators."
           normalRange="Low to Moderate"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Blood Oxygen"
           value="98%"
           icon={<Gauge className="h-4 w-4" />}

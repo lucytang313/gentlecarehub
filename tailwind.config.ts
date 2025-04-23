@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -67,10 +68,20 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "card-expand": {
+          from: { height: "80px", opacity: "0.8" },
+          to: { height: "auto", opacity: "1" }
+        },
+        "card-collapse": {
+          from: { height: "auto", opacity: "1" },
+          to: { height: "80px", opacity: "0.8" }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "card-expand": "card-expand 0.3s ease-out forwards",
+        "card-collapse": "card-collapse 0.3s ease-out forwards"
       },
     },
   },

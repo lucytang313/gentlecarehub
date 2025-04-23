@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { Heart, Activity, Wind, Thermometer } from 'lucide-react';
-import { HealthMetricCard } from './HealthMetricCard';
+import { ExpandableHealthMetricCard } from './ExpandableHealthMetricCard';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const generateTrendData = (baseValue: number, variance: number) => {
   return Array.from({ length: 7 }, (_, i) => ({
@@ -10,11 +12,13 @@ const generateTrendData = (baseValue: number, variance: number) => {
 };
 
 export const PrimaryVitals = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-primary">Primary Vitals</h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <HealthMetricCard
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
+        <ExpandableHealthMetricCard
           title="Heart Rate"
           value="72 BPM"
           icon={<Heart className="h-4 w-4" />}
@@ -24,7 +28,7 @@ export const PrimaryVitals = () => {
           unit="Beats Per Minute (BPM)"
           normalRange="60-100 BPM"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Blood Pressure"
           value="120/80 mmHg"
           icon={<Activity className="h-4 w-4" />}
@@ -34,7 +38,7 @@ export const PrimaryVitals = () => {
           unit="Millimeters of Mercury (mmHg)"
           normalRange="Systolic: 90-120 mmHg, Diastolic: 60-80 mmHg"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Respiratory Rate"
           value="16 BPM"
           icon={<Wind className="h-4 w-4" />}
@@ -44,7 +48,7 @@ export const PrimaryVitals = () => {
           unit="Breaths Per Minute (BPM)"
           normalRange="12-20 BPM"
         />
-        <HealthMetricCard
+        <ExpandableHealthMetricCard
           title="Temperature"
           value="36.6°C"
           icon={<Thermometer className="h-4 w-4" />}

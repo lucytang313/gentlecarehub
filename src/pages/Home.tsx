@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,9 +12,11 @@ import { ConciergeService } from "@/components/ConciergeService";
 import { BuddyScheduler } from "@/components/BuddyScheduler";
 import { CommunityEvents } from "@/components/CommunityEvents";
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Home = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -24,19 +27,19 @@ const Home = () => {
         <PrimaryVitals />
         <AdditionalHealthMetrics />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
           <TicketHistory />
           <ConciergeService />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
           <BuddyScheduler />
           <CommunityEvents />
         </div>
 
         <PrescriptionManagement />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
           <Card className="bg-gradient-to-br from-white to-gray-50 border-primary/10 shadow-lg">
             <CardHeader>
               <CardTitle className="text-primary">Payment & Subscription</CardTitle>
