@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Droplets, Activity, Scale, Moon, Brain, Gauge } from 'lucide-react';
 import { ExpandableHealthMetricCard } from './ExpandableHealthMetricCard';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { motion } from 'framer-motion';
 
 const generateTrendData = (baseValue: number, variance: number) => {
   return Array.from({ length: 7 }, (_, i) => ({
@@ -13,11 +14,24 @@ const generateTrendData = (baseValue: number, variance: number) => {
 
 export const AdditionalHealthMetrics = () => {
   const isMobile = useIsMobile();
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const toggleCard = (cardId: string) => {
+    if (isMobile) {
+      setExpandedCard(expandedCard === cardId ? null : cardId);
+    }
+  };
+
+  const isCardExpanded = (cardId: string) => expandedCard === cardId;
 
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-primary">Additional Health Metrics</h2>
-      <div className={`grid gap-6 ${isMobile ? 'grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+      <motion.div 
+        layout
+        className={`grid gap-6 ${isMobile ? 'grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
         <ExpandableHealthMetricCard
           title="Blood Sugar"
           value="95 mg/dL"
@@ -27,6 +41,8 @@ export const AdditionalHealthMetrics = () => {
           description="Blood sugar (glucose) level indicates the amount of sugar in your bloodstream. It's important for monitoring diabetes and overall health."
           unit="Milligrams per Deciliter (mg/dL)"
           normalRange="70-99 mg/dL (fasting)"
+          isExpanded={isCardExpanded('blood-sugar')}
+          onToggleExpand={() => toggleCard('blood-sugar')}
         />
         <ExpandableHealthMetricCard
           title="ECG"
@@ -36,6 +52,8 @@ export const AdditionalHealthMetrics = () => {
           trendData={generateTrendData(72, 5)}
           description="Electrocardiogram (ECG) measures the electrical activity of your heart. It helps detect irregular heartbeats and other heart conditions."
           normalRange="Normal sinus rhythm"
+          isExpanded={isCardExpanded('ecg')}
+          onToggleExpand={() => toggleCard('ecg')}
         />
         <ExpandableHealthMetricCard
           title="BMI"
@@ -46,6 +64,8 @@ export const AdditionalHealthMetrics = () => {
           description="Body Mass Index (BMI) is a measure of body fat based on height and weight. It helps assess if someone is at a healthy weight."
           unit="kg/m²"
           normalRange="18.5-24.9"
+          isExpanded={isCardExpanded('bmi')}
+          onToggleExpand={() => toggleCard('bmi')}
         />
         <ExpandableHealthMetricCard
           title="Sleep Level"
@@ -56,6 +76,8 @@ export const AdditionalHealthMetrics = () => {
           description="Sleep duration and quality are important for overall health. Good sleep helps with recovery, memory, and immune function."
           unit="Hours"
           normalRange="7-9 hours per night"
+          isExpanded={isCardExpanded('sleep-level')}
+          onToggleExpand={() => toggleCard('sleep-level')}
         />
         <ExpandableHealthMetricCard
           title="Stress Level"
@@ -65,6 +87,8 @@ export const AdditionalHealthMetrics = () => {
           trendData={generateTrendData(2, 1)}
           description="Stress level indicates your current mental and emotional state. It's measured through various physiological indicators."
           normalRange="Low to Moderate"
+          isExpanded={isCardExpanded('stress-level')}
+          onToggleExpand={() => toggleCard('stress-level')}
         />
         <ExpandableHealthMetricCard
           title="Blood Oxygen"
@@ -75,8 +99,10 @@ export const AdditionalHealthMetrics = () => {
           description="Blood oxygen saturation (SpO2) measures how much oxygen your red blood cells are carrying. It's crucial for vital organ function."
           unit="Percentage (%)"
           normalRange="95-100%"
+          isExpanded={isCardExpanded('blood-oxygen')}
+          onToggleExpand={() => toggleCard('blood-oxygen')}
         />
-      </div>
+      </motion.div>
     </div>
   );
 };

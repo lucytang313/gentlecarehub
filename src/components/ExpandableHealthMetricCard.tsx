@@ -21,6 +21,8 @@ interface HealthMetricCardProps {
   description?: string;
   unit?: string;
   normalRange?: string;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
 }
 
 export const ExpandableHealthMetricCard = ({ 
@@ -31,13 +33,22 @@ export const ExpandableHealthMetricCard = ({
   trendData,
   description,
   unit,
-  normalRange
+  normalRange,
+  isExpanded,
+  onToggleExpand
 }: HealthMetricCardProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [localExpanded, setLocalExpanded] = useState(false);
   const isMobile = useIsMobile();
-
+  
+  // Use either controlled or uncontrolled expansion state
+  const expanded = isExpanded !== undefined ? isExpanded : localExpanded;
+  
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
+    if (onToggleExpand) {
+      onToggleExpand();
+    } else {
+      setLocalExpanded(!localExpanded);
+    }
   };
 
   // On desktop, always show full card
@@ -98,23 +109,18 @@ export const ExpandableHealthMetricCard = ({
     <motion.div
       layout
       onClick={toggleExpand}
-      className="cursor-pointer"
+      className={`cursor-pointer ${expanded ? "col-span-2 row-span-2 z-10" : ""}`}
       initial={{ borderRadius: 16 }}
-      animate={{ 
-        height: isExpanded ? "auto" : "auto", 
-        backgroundColor: isExpanded ? "white" : "white",
-        y: isExpanded ? 0 : 0
-      }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: 0.3, ease: "easeInOut", layout: { duration: 0.3 } }}
     >
-      <Card className="bg-gradient-to-br from-white to-gray-50 border-none shadow-md">
+      <Card className="bg-gradient-to-br from-white to-gray-50 border-none shadow-md h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="flex items-center gap-2">
             <CardTitle className="text-sm font-medium">{title}</CardTitle>
           </div>
           <div className="flex items-center gap-2">
             <div className="text-primary">{icon}</div>
-            {isExpanded ? (
+            {expanded ? (
               <ChevronUp className="h-4 w-4 text-secondary" />
             ) : (
               <ChevronDown className="h-4 w-4 text-secondary" />
@@ -123,7 +129,7 @@ export const ExpandableHealthMetricCard = ({
         </CardHeader>
         
         <AnimatePresence>
-          {isExpanded && (
+          {expanded && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
